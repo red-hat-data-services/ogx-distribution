@@ -62,12 +62,12 @@ def _load_versions():
     return versions
 
 _versions = _load_versions()
-_default_version = f"v{_versions['LLAMA_STACK_VERSION']}+{_versions['LLAMA_STACK_RHAI_VERSION']}"
-_raw_version = os.getenv("LLAMA_STACK_VERSION", _default_version)
-LLAMA_STACK_VERSION = _validate_version(_raw_version)
-LLAMA_STACK_CLIENT_VERSION = _versions.get("LLAMA_STACK_CLIENT_VERSION")
+_default_version = f"v{_versions['OGX_VERSION']}+{_versions['OGX_RHAI_VERSION']}"
+_raw_version = os.getenv("OGX_VERSION", _default_version)
+OGX_VERSION = _validate_version(_raw_version)
+OGX_CLIENT_VERSION = _versions.get("OGX_CLIENT_VERSION")
 BASE_REQUIREMENTS = [
-    f"llama-stack=={LLAMA_STACK_VERSION}",
+    f"ogx=={OGX_VERSION}",
 ]
 
 # Constrain packages we are patching to ensure reliable and repeatable build
@@ -82,41 +82,33 @@ PINNED_DEPENDENCIES = [
     "'setuptools==80.10.2'",
 ]
 
-source_install_command_pypi_client = """uv pip install --no-cache 'llama-stack-api@git+https://github.com/opendatahub-io/llama-stack.git@{llama_stack_version}#subdirectory=src/llama_stack_api'
-uv pip install --no-cache --no-deps git+https://github.com/opendatahub-io/llama-stack.git@{llama_stack_version}
-uv pip install --no-cache --no-deps llama-stack-client=={llama_stack_client_version}"""
+source_install_command_pypi_client = """uv pip install --no-cache 'ogx-api@git+https://github.com/opendatahub-io/ogx.git@{ogx_version}#subdirectory=src/ogx_api'
+uv pip install --no-cache --no-deps git+https://github.com/opendatahub-io/ogx.git@{ogx_version}
+uv pip install --no-cache --no-deps ogx-client=={ogx_client_version}"""
 
-source_install_command_git_client = """uv pip install --no-cache 'llama-stack-api@git+https://github.com/opendatahub-io/llama-stack.git@{llama_stack_version}#subdirectory=src/llama_stack_api'
-uv pip install --no-cache --no-deps git+https://github.com/opendatahub-io/llama-stack.git@{llama_stack_version}"""
+source_install_command_git_client = """uv pip install --no-cache 'ogx-api@git+https://github.com/opendatahub-io/ogx.git@{ogx_version}#subdirectory=src/ogx_api'
+uv pip install --no-cache --no-deps git+https://github.com/opendatahub-io/ogx.git@{ogx_version}"""
 
 
-def get_llama_stack_install(llama_stack_version):
-    # Use explicit client version if set, otherwise derive from llama_stack_version
+def get_ogx_install(ogx_version):
+    # Use explicit client version if set, otherwise derive from ogx_version
     # by removing +rhai suffix and restricting to x.y.z format (3 parts)
-    if LLAMA_STACK_CLIENT_VERSION:
-        llama_stack_client_version = LLAMA_STACK_CLIENT_VERSION
+    if OGX_CLIENT_VERSION:
+        ogx_client_version = OGX_CLIENT_VERSION
     else:
         # Remove +rhai suffix and restrict to x.y.z (e.g., v0.6.0.1+rhai0 -> v0.6.0)
-        base_version = llama_stack_version.split("+")[0]
-        llama_stack_client_version = ".".join(base_version.split(".")[:3])
-    # If the version is a commit SHA or a short commit SHA, we need to install from source
-    if is_install_from_source(llama_stack_version):
-        print(f"Installing llama-stack from source: {llama_stack_version}")
+        base_version = ogx_version.split("+")[0]
+        ogx_client_version = ".".join(base_version.split(".")[:3])
+    if is_install_from_source(ogx_version):
+        print(f"Installing ogx from source: {ogx_version}")
 
-        # Determine if client should come from PyPI or git
-        # Version tags (v0.5.0+rhai0) use PyPI for client (stable release)
-        # Branch names (main, release-0.5.x) use git for client (matching branch)
-        if is_version_tag(llama_stack_version):
-            # Version tag - use PyPI for client (stable release)
+        if is_version_tag(ogx_version):
             template = source_install_command_pypi_client
         else:
-            # Branch name - use git for client (matching branch)
             template = source_install_command_git_client
 
-        result = template.replace("{llama_stack_version}", llama_stack_version)
-        result = result.replace(
-            "{llama_stack_client_version}", llama_stack_client_version
-        )
+        result = template.replace("{ogx_version}", ogx_version)
+        result = result.replace("{ogx_client_version}", ogx_client_version)
         return result.rstrip()
 
 
@@ -135,15 +127,12 @@ def is_version_tag(version_str):
     return False
 
 
-def is_install_from_source(llama_stack_version):
+def is_install_from_source(ogx_version):
     """Check if version string requires git install (branch/commit) vs PyPI (version tag)."""
-    # Custom versions with +rhai suffix always install from source
-    if "+rhai" in llama_stack_version:
+    if "+rhai" in ogx_version:
         return True
-    # Version tags (v0.5.0, 0.5.0) use PyPI
-    if is_version_tag(llama_stack_version):
+    if is_version_tag(ogx_version):
         return False
-    # Everything else (branch names, commit SHAs) install from source
     return True
 
 
@@ -159,59 +148,54 @@ def check_command_installed(command, package_name=None):
         sys.exit(1)
 
 
-def check_llama_stack_version():
-    """Check if the llama-stack version in BASE_REQUIREMENTS matches the installed version."""
+def check_ogx_version():
+    """Check if the ogx version in BASE_REQUIREMENTS matches the installed version."""
     try:
         result = subprocess.run(
-            ["llama", "stack", "--version"],
+            ["ogx", "--version"],
             capture_output=True,
             text=True,
             check=True,
         )
         installed_version = result.stdout.strip()
 
-        # Extract version from BASE_REQUIREMENTS
         expected_version = None
         for req in BASE_REQUIREMENTS:
-            if req.startswith("llama-stack=="):
+            if req.startswith("ogx=="):
                 expected_version = req.split("==")[1]
                 break
 
         if expected_version and installed_version != expected_version:
-            print("Error: llama-stack version mismatch!")
+            print("Error: ogx version mismatch!")
             print(f"  Expected: {expected_version}")
             print(f"  Installed: {installed_version}")
-            print(
-                "  If you just bumped the llama-stack version in BASE_REQUIREMENTS, you must update the version from .pre-commit-config.yaml"
-            )
             sys.exit(1)
 
     except subprocess.CalledProcessError as e:
-        print(f"Warning: Could not check llama-stack version: {e}")
+        print(f"Warning: Could not check ogx version: {e}")
         print("Continuing without version validation...")
 
 
-def install_llama_stack_from_source(llama_stack_version):
-    """Install llama-stack from source using git."""
-    print("installing llama-stack from source...")
-    version = _validate_version(llama_stack_version)
+def install_ogx_from_source(ogx_version):
+    """Install ogx from source using git."""
+    print("installing ogx from source...")
+    version = _validate_version(ogx_version)
     try:
         result = subprocess.run(
             [
                 "uv",
                 "pip",
                 "install",
-                f"git+https://github.com/opendatahub-io/llama-stack.git@{version}",
+                f"git+https://github.com/opendatahub-io/ogx.git@{version}",
             ],
             check=True,
             capture_output=True,
             text=True,
         )
-        # Print stdout if there's any output
         if result.stdout:
             print(result.stdout)
     except subprocess.CalledProcessError as e:
-        print(f"Error installing llama-stack: {e}")
+        print(f"Error installing ogx: {e}")
         if e.stdout:
             print(f"stdout: {e.stdout}")
         if e.stderr:
@@ -274,8 +258,8 @@ def generate_stripped_config():
 
 
 def get_dependencies():
-    """Execute the llama stack build command and capture dependencies."""
-    cmd = ["llama", "stack", "list-deps", "distribution/build.yaml"]
+    """Execute the ogx list-deps command and capture dependencies."""
+    cmd = ["ogx", "stack", "list-deps", "distribution/build.yaml"]
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, check=True)
         # Categorize and sort different types of pip install commands
@@ -405,7 +389,7 @@ def generate_install_deps_script(dependencies):
         "",
         "pip install sqlalchemy",
         "uv pip install opentelemetry-distro",
-        "uv pip install structlog",
+        "uv pip install structlog zstandard",
         "",
         dependencies.rstrip(),
         "",
@@ -422,7 +406,7 @@ def generate_install_deps_script(dependencies):
     print(f"Successfully generated {output_path}")
 
 
-def generate_containerfile(llama_stack_install):
+def generate_containerfile(ogx_install):
     """Generate Containerfile from template."""
     template_path = Path("distribution/Containerfile.in")
     output_path = Path("distribution/Containerfile")
@@ -438,14 +422,13 @@ def generate_containerfile(llama_stack_install):
 
     containerfile_content = warning + template_content
 
-    # Substitute llama-stack source install (version-dependent, not in install-deps.sh)
-    llama_stack_runs = ""
-    if llama_stack_install:
-        llama_stack_runs = "\n".join(
-            f"RUN {line}" for line in llama_stack_install.strip().splitlines()
+    ogx_runs = ""
+    if ogx_install:
+        ogx_runs = "\n".join(
+            f"RUN {line}" for line in ogx_install.strip().splitlines()
         )
     containerfile_content = containerfile_content.replace(
-        "{llama_stack_install_source}", llama_stack_runs
+        "{ogx_install_source}", ogx_runs
     )
 
     # Remove blank lines from empty substitutions
@@ -462,14 +445,13 @@ def generate_containerfile(llama_stack_install):
 
 def main():
     check_command_installed("uv")
-    install_llama_stack_from_source(LLAMA_STACK_VERSION)
+    install_ogx_from_source(OGX_VERSION)
 
-    check_command_installed("llama", "llama-stack-client")
+    check_command_installed("ogx", "ogx-client")
 
-    # Do not perform version check if installing from source
-    if not is_install_from_source(LLAMA_STACK_VERSION):
-        print("Checking llama-stack version...")
-        check_llama_stack_version()
+    if not is_install_from_source(OGX_VERSION):
+        print("Checking ogx version...")
+        check_ogx_version()
 
     print("Generating stripped config.yaml...")
     generate_stripped_config()
@@ -477,14 +459,14 @@ def main():
     print("Getting dependencies...")
     dependencies = get_dependencies()
 
-    print("Getting llama-stack install...")
-    llama_stack_install = get_llama_stack_install(LLAMA_STACK_VERSION)
+    print("Getting ogx install...")
+    ogx_install = get_ogx_install(OGX_VERSION)
 
     print("Generating install-deps.sh...")
     generate_install_deps_script(dependencies)
 
     print("Generating Containerfile...")
-    generate_containerfile(llama_stack_install)
+    generate_containerfile(ogx_install)
 
     print("Done!")
 

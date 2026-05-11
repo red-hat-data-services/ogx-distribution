@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-mkdir -p "${HOME}/.llama" "${HOME}/.cache"
+mkdir -p "${HOME}/.ogx" "${HOME}/.cache"
 
 # Pre-cache tiktoken cl100k_base encoding to avoid runtime download
 # from openaipublic.blob.core.windows.net (used by vector_store chunking)
