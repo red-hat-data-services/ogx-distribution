@@ -49,12 +49,23 @@ STRIPPED_CONFIG_HEADER = (
     "# Stripped provider types (dependency only - available via custom config.yaml):\n"
 )
 
-CURRENT_LLAMA_STACK_VERSION = "v0.7.1+rhaiv.1"
-_raw_version = os.getenv("LLAMA_STACK_VERSION", CURRENT_LLAMA_STACK_VERSION)
+def _load_versions():
+    """Load version strings from distribution/versions.env."""
+    versions = {}
+    versions_path = Path(__file__).parent / "versions.env"
+    with open(versions_path) as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                key, value = line.split("=", 1)
+                versions[key.strip()] = value.strip()
+    return versions
+
+_versions = _load_versions()
+_default_version = f"v{_versions['LLAMA_STACK_VERSION']}+{_versions['LLAMA_STACK_RHAI_VERSION']}"
+_raw_version = os.getenv("LLAMA_STACK_VERSION", _default_version)
 LLAMA_STACK_VERSION = _validate_version(_raw_version)
-LLAMA_STACK_CLIENT_VERSION = (
-    "0.7.2"  # Explicit version; set to None to auto-derive from LLAMA_STACK_VERSION
-)
+LLAMA_STACK_CLIENT_VERSION = _versions.get("LLAMA_STACK_CLIENT_VERSION")
 BASE_REQUIREMENTS = [
     f"llama-stack=={LLAMA_STACK_VERSION}",
 ]

@@ -17,7 +17,9 @@ LABEL com.redhat.component="llama-stack-cpu-rhel9-container" \
 COPY --chmod=755 distribution/install-deps.sh ${APP_ROOT}/install-deps.sh
 RUN ${APP_ROOT}/install-deps.sh
 
-RUN uv pip install llama-stack llama-stack-api llama-stack-client
+COPY distribution/versions.env ${APP_ROOT}/versions.env
+RUN . ${APP_ROOT}/versions.env && \
+    uv pip install llama-stack==${LLAMA_STACK_VERSION} llama-stack-api==${LLAMA_STACK_VERSION} llama-stack-client==${LLAMA_STACK_CLIENT_VERSION}
 
 USER 0
 # install missing RPMs (online, requires subscription)
