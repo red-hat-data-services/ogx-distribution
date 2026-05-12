@@ -103,6 +103,7 @@ jobs:
 
           uv venv
           source .venv/bin/activate
+          uv pip install 'ruamel.yaml>=0.18.0'
           python3 distribution/build.py
           podman build -f distribution/Containerfile -t "llama-stack-test:$TAG" .
 
