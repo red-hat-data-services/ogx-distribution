@@ -64,6 +64,6 @@ repos:
         language: python
         pass_filenames: false
         require_serial: true
-        files: ^distribution/(build|config)\.yaml$
+        files: ^distribution/((build|config)\.yaml|Containerfile)$
         additional_dependencies:
           - pyyaml==6.0.2
