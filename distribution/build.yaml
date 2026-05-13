@@ -204,6 +204,9 @@ storage:
     prompts:
       namespace: prompts
       backend: kv_default
+    connectors:
+      table_name: connectors
+      backend: sql_default
 registered_resources:
   models:
   - metadata:
