@@ -99,7 +99,7 @@ PINNED_DEPENDENCIES = [
     "'aiobotocore==2.16.1'",
     "'ibm-cos-sdk-core==2.14.2'",
     "'ibm-cos-sdk==2.14.2'",
-    "'setuptools==80.10.2'",
+    "'setuptools==81.0.0'",
 ]
 
 source_install_command_pypi_client = """uv pip install --no-cache 'ogx-api@git+https://github.com/opendatahub-io/ogx.git@{ogx_version}#subdirectory=src/ogx_api'
