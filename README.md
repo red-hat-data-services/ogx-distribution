@@ -1,6 +1,6 @@
 # Open Data Hub OGX Distribution
 
-[![Build](https://github.com/opendatahub-io/llama-stack-distribution/actions/workflows/redhat-distro-container.yml/badge.svg?branch=main)](https://github.com/opendatahub-io/llama-stack-distribution/actions/workflows/redhat-distro-container.yml)
+[![Build](https://github.com/opendatahub-io/ogx-distribution/actions/workflows/redhat-distro-container.yml/badge.svg?branch=main)](https://github.com/opendatahub-io/ogx-distribution/actions/workflows/redhat-distro-container.yml)
 
 This directory contains the necessary files to build an Open Data Hub-compatible container image for [OGX](https://github.com/ogx-ai/ogx).
 
