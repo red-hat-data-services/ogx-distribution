@@ -90,6 +90,7 @@ BASE_REQUIREMENTS = [
     f"ogx=={OGX_VERSION}",
 ]
 
+# TODO(efenness): It's likely that we don't need many of these dependencies - let's see what we can delete
 # Constrain packages we are patching to ensure reliable and repeatable build
 PINNED_DEPENDENCIES = [
     "'kfp-kubernetes==2.14.6'",
@@ -97,8 +98,6 @@ PINNED_DEPENDENCIES = [
     "'botocore==1.35.88'",
     "'boto3==1.35.88'",
     "'aiobotocore==2.16.1'",
-    "'ibm-cos-sdk-core==2.14.2'",
-    "'ibm-cos-sdk==2.14.2'",
     "'setuptools==80.10.2'",
     "'milvus-lite==2.5.1'",
 ]
@@ -408,7 +407,7 @@ def generate_install_deps_script(dependencies):
         "",
         dependencies.rstrip(),
         "",
-        "opentelemetry-bootstrap -a requirements | uv pip install --requirement -",
+        "opentelemetry-bootstrap -a requirements | grep -v opentelemetry-instrumentation-botocore | uv pip install --requirement -",
         "",
         "uv pip install tiktoken==0.12.0",
     ]
