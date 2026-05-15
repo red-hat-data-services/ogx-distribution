@@ -20,7 +20,8 @@ RUN ${APP_ROOT}/install-deps.sh
 COPY distribution/versions.env ${APP_ROOT}/versions.env
 # TODO: remove --extra-index-url once ogx packages are in the base image index
 RUN . ${APP_ROOT}/versions.env && \
-    uv pip install ogx==${OGX_VERSION} ogx-api==${OGX_VERSION} ogx-client==${OGX_CLIENT_VERSION}
+    uv pip install --extra-index-url https://packages.redhat.com/api/pypi/public-rhai/rhoai/3.5-EA2/cpu-ubi9-test/simple \
+        ogx==${OGX_VERSION} ogx-api==${OGX_VERSION} ogx-client==${OGX_CLIENT_VERSION}
 
 USER 0
 # install missing RPMs (online, requires subscription)
