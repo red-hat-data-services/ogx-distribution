@@ -14,15 +14,17 @@ uv pip install --upgrade \
     'boto3==1.35.88' \
     'aiobotocore==2.16.1' \
     'setuptools==80.10.2' \
-    'milvus-lite==2.5.1'
+    'milvus-lite==2.5.1; platform_machine != "ppc64le"'
 uv pip install \
     'fonttools>=4.60.2' \
     'google-genai>=1.69.0' \
+    'markitdown[all]' \
     'mcp>=1.23.0' \
     'nltk>=3.9.4' \
     'pymilvus==2.6.9' \
-    'pymilvus[milvus-lite]==2.6.9' \
     'pypdf>=6.10.0' \
+    'pypdf>=6.7.2' \
+    'sqlalchemy[asyncio]' \
     aiosqlite \
     asyncpg \
     boto3 \
@@ -47,7 +49,6 @@ uv pip install \
     scikit-learn \
     scipy \
     sentencepiece \
-    sqlalchemy[asyncio] \
     tokenizers \
     tqdm \
     transformers \

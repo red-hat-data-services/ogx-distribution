@@ -99,7 +99,7 @@ PINNED_DEPENDENCIES = [
     "'boto3==1.35.88'",
     "'aiobotocore==2.16.1'",
     "'setuptools==80.10.2'",
-    "'milvus-lite==2.5.1'",
+    "'milvus-lite==2.5.1; platform_machine != \"ppc64le\"'",
 ]
 
 source_install_command_pypi_client = """uv pip install --no-cache 'ogx-api@git+https://github.com/opendatahub-io/ogx.git@{ogx_version}#subdirectory=src/ogx_api'
@@ -317,20 +317,21 @@ def get_dependencies():
             # Sort and deduplicate packages
             packages = sorted(set(packages))
 
-            # Add quotes to packages with > or < to prevent bash redirection
+            # Add quotes to packages with >, <, or [ to prevent bash
+            # redirection and glob interpretation (shellcheck SC2102).
             packages = [
-                f"'{package}'" if (">" in package or "<" in package) else package
+                f"'{package}'"
+                if (">" in package or "<" in package or "[" in package)
+                else package
                 for package in packages
             ]
 
             # Pin pymilvus to 2.6.9 to avoid gRPC crash
             # 2.6.10 crashes Milvus Lite gRPC init with empty dns:/// target
+            # Use plain pymilvus (no [milvus-lite] extra) so the explicit
+            # milvus-lite pin in PINNED_DEPENDENCIES is the sole source
             packages = [
-                "'pymilvus[milvus-lite]==2.6.9'"
-                if "pymilvus[milvus-lite]" in package
-                else "'pymilvus==2.6.9'"
-                if "pymilvus" in package
-                else package
+                "'pymilvus==2.6.9'" if "pymilvus" in package else package
                 for package in packages
             ]
 
