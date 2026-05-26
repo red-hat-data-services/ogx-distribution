@@ -103,14 +103,12 @@ curl -X POST \
 
 OGX has both a ["Gemini"](https://ogx-ai.github.io/docs/next/providers/inference/remote_gemini) and "Vertex AI" provider. They are completely different APIs.
 
-The Gemini provider supports two authentication methods:
+The Gemini provider supports two authentication methods (`GEMINI_API_KEY` or `GEMINI_ACCESS_TOKEN`, but not both):
 
 | Method | Env vars | Use case |
 |---|---|---|
 | **API key** | `GEMINI_API_KEY` | Keys from [Google AI Studio](https://ai.google.dev/gemini-api/docs/api-key). Sent as a `?key=` query parameter. |
-| **OAuth/ADC** | `GEMINI_API_KEY=unused` + `GEMINI_ACCESS_TOKEN` + (optional) `GEMINI_AI_PROJECT` | Short-lived tokens from `gcloud` SSO. Sent as `Authorization: Bearer` header. |
-
-> **Why set `GEMINI_API_KEY=unused` for OAuth?** The OGX distribution activates the Gemini provider only when `GEMINI_API_KEY` is non-empty. Setting it to any non-empty value (e.g. `unused`) activates the provider; the upstream code then uses `GEMINI_ACCESS_TOKEN` for Bearer auth when it is present, ignoring the `api_key` value.
+| **OAuth/ADC** | `GEMINI_ACCESS_TOKEN` + `GEMINI_AI_PROJECT` | Short-lived tokens from `gcloud` SSO. Sent as `Authorization: Bearer` header. |
 
 ### Running Gemini with OGX
 
@@ -127,7 +125,6 @@ export CLOUDSDK_CONFIG="/tmp/gcloud"
 
 gcloud auth application-default login --scopes='https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/generative-language.retriever'
 
-export GEMINI_API_KEY=unused
 export GEMINI_ACCESS_TOKEN=$(gcloud auth application-default print-access-token)
 # Choose "aaet-dev" if you are on the core OGX team.
 export GEMINI_AI_PROJECT=aaet-dev
