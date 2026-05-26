@@ -202,45 +202,25 @@ def get_dependencies(ogx_bin: Path) -> list[str]:
     cmd = [str(ogx_bin), "stack", "list-deps", "build/build.yaml"]
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-        packages = []
-
-        for line in result.stdout.splitlines():
-            line = line.strip()
-            if not line:
-                continue
-
-            parts_list = shlex.split(line)
-
-            i = 0
-            while i < len(parts_list):
-                if parts_list[i] in (
-                    "--extra-index-url",
-                    "--index-url",
-                ) and i + 1 < len(parts_list):
-                    i += 2
-                elif parts_list[i].startswith("--"):
-                    i += 1
-                else:
-                    packages.append(parts_list[i])
-                    i += 1
-
-        # Convert namespace packages like llama_stack_provider_ragas.extra==0.5.1
-        # to extras syntax llama_stack_provider_ragas[extra]==0.5.1
-        packages = [
-            re.sub(
-                r"\.([a-zA-Z_][a-zA-Z0-9_]*)(==|>=|<=|>|<|~=|!=)",
-                r"[\1]\2",
-                pkg,
-            )
-            for pkg in packages
-        ]
-
-        return packages
     except subprocess.CalledProcessError as e:
         print(f"Error executing command: {e}")
         print(f"Command output: {e.output}")
         print(f"Command stderr: {e.stderr}")
         sys.exit(1)
+
+    packages = []
+    for line in result.stdout.splitlines():
+        parts = iter(shlex.split(line))
+        for part in parts:
+            match part:
+                case "--extra-index-url" | "--index-url":
+                    next(parts, None)
+                case "--no-deps":
+                    continue
+                case _:
+                    packages.append(part)
+
+    return packages
 
 
 def get_opentelemetry_packages(bootstrap_bin: Path) -> list[str]:
