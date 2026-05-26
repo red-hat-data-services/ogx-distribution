@@ -13,7 +13,4 @@ ENV TIKTOKEN_CACHE_DIR="${HOME}/.cache/tiktoken"
 COPY dist/config.yaml ${APP_ROOT}/config.yaml
 COPY --chmod=755 dist/entrypoint.sh ${APP_ROOT}/entrypoint.sh
 
-#TODO: remove this once we have a stable version of ogx
-ENV OGX_DISABLE_VERSION_CHECK=true
-
 ENTRYPOINT [ "/opt/app-root/entrypoint.sh" ]
