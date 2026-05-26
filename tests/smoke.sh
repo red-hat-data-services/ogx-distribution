@@ -62,6 +62,12 @@ function start_and_wait_for_ogx_container {
   if [ -n "${GEMINI_API_KEY:-}" ]; then
     docker_args+=(--env "GEMINI_API_KEY=$GEMINI_API_KEY")
   fi
+  if [ -n "${GEMINI_ACCESS_TOKEN:-}" ]; then
+    docker_args+=(--env "GEMINI_ACCESS_TOKEN=$GEMINI_ACCESS_TOKEN")
+  fi
+  if [ -n "${GEMINI_AI_PROJECT:-}" ]; then
+    docker_args+=(--env "GEMINI_AI_PROJECT=$GEMINI_AI_PROJECT")
+  fi
 
   docker_args+=(--name ogx "$IMAGE_NAME:${IMAGE_TAG:-$GITHUB_SHA}")
 

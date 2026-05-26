@@ -103,6 +103,7 @@ function main() {
     echo "  VERTEX_AI_PROJECT: ${VERTEX_AI_PROJECT:-<not set>}"
     echo "  OPENAI_API_KEY: ${OPENAI_API_KEY:+<set>}"
     echo "  GEMINI_API_KEY: ${GEMINI_API_KEY:+<set>}"
+    echo "  GEMINI_ACCESS_TOKEN: ${GEMINI_ACCESS_TOKEN:+<set>}"
 
     clone_ogx
 
