@@ -61,10 +61,12 @@ jobs:
       VERTEX_AI_PROJECT: ${{ secrets.VERTEX_AI_PROJECT }}
       GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       # Model names - set defaults, overridden by MaaS configuration step
       VLLM_INFERENCE_MODEL: vllm-inference/Qwen/Qwen3-0.6B
       VERTEX_AI_INFERENCE_MODEL: vertexai/publishers/google/models/gemini-2.0-flash
       OPENAI_INFERENCE_MODEL: openai/gpt-5-nano
+      GEMINI_INFERENCE_MODEL: gemini/models/gemini-2.5-flash
       EMBEDDING_MODEL: vllm-embedding/ibm-granite/granite-embedding-125m-english
       VLLM_URL: http://localhost:8000/v1
       VLLM_EMBEDDING_URL: http://localhost:8001/v1
@@ -143,7 +145,7 @@ jobs:
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             if [ "${{ github.event.pull_request.head.repo.fork }}" = "true" ] || [ "${{ github.secret_source }}" = "Dependabot" ]; then
               echo "::warning::Fork/Dependabot PR — unsetting all provider credentials"
-              { echo "VERTEX_AI_PROJECT="; echo "GCP_WORKLOAD_IDENTITY_PROVIDER="; echo "OPENAI_API_KEY="; } >> "$GITHUB_ENV"
+              { echo "VERTEX_AI_PROJECT="; echo "GCP_WORKLOAD_IDENTITY_PROVIDER="; echo "OPENAI_API_KEY="; echo "GEMINI_API_KEY="; echo "ENABLE_GEMINI="; } >> "$GITHUB_ENV"
               exit 0
             fi
           fi
@@ -158,6 +160,18 @@ jobs:
             if [ "$status" != "200" ]; then
               echo "::warning::OpenAI API returned HTTP $status, skipping OpenAI tests"
               echo "OPENAI_API_KEY=" >> "$GITHUB_ENV"
+            fi
+          fi
+
+          # Gemini: validate key with a lightweight call
+          if [ -n "$GEMINI_API_KEY" ]; then
+            status=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 \
+              "https://generativelanguage.googleapis.com/v1beta/models?key=$GEMINI_API_KEY")
+            if [ "$status" != "200" ]; then
+              echo "::warning::Gemini API returned HTTP $status, skipping Gemini tests"
+              { echo "GEMINI_API_KEY="; echo "ENABLE_GEMINI="; } >> "$GITHUB_ENV"
+            else
+              echo "ENABLE_GEMINI=1" >> "$GITHUB_ENV"
             fi
           fi
 
