@@ -24,7 +24,7 @@ env:
   PROVIDER_NAME: vertexai
   EMBEDDING_MODEL: vertexai/publishers/google/models/gemini-embedding-2
   IMAGE_NAME: quay.io/opendatahub/odh-ogx-core
-  IMAGE_TAG: source-b5c18de28794baaf537b2683271a5043ccd42426-6515a120edf38a477a55b037e745752f2535661c
+  IMAGE_TAG: ${{ inputs.image_tag || 'source-b5c18de28794baaf537b2683271a5043ccd42426-6515a120edf38a477a55b037e745752f2535661c' }}
 
 jobs:
   check:
@@ -143,8 +143,18 @@ jobs:
             --junit-xml="/tmp/test-results/results_${PROVIDER_NAME}_${SHORT}.xml" \
             || [ $? -eq 5 ]
 
-      - name: Publish test report
+      - name: Check for test results
+        id: results
         if: always()
+        run: |
+          if ls /tmp/test-results/*.xml 1>/dev/null 2>&1; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish test report
+        if: always() && steps.results.outputs.found == 'true'
         uses: dorny/test-reporter@a43b3a5f7366b97d083190328d2c652e1a8b6aa2 # v3.0.0
         with:
           name: "${{ env.PROVIDER_NAME }}/${{ steps.model.outputs.short }}"
@@ -153,7 +163,7 @@ jobs:
           fail-on-error: 'false'
 
       - name: Upload artifacts
-        if: always()
+        if: always() && steps.results.outputs.found == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: responses-${{ env.PROVIDER_NAME }}-${{ steps.model.outputs.short }}

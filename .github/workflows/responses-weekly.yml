@@ -39,7 +39,7 @@ permissions:
 jobs:
   # ── OpenAI ──────────────────────────────────────────────────────
   test-openai:
-    if: inputs.run_openai != false
+    if: github.event_name == 'schedule' || inputs.run_openai != false
     uses: ./.github/workflows/responses-openai.yml
     with:
       models: ${{ inputs.openai_models }}
@@ -47,7 +47,7 @@ jobs:
 
   # ── Vertex AI ───────────────────────────────────────────────────
   test-vertexai:
-    if: inputs.run_vertexai != false
+    if: github.event_name == 'schedule' || inputs.run_vertexai != false
     uses: ./.github/workflows/responses-vertexai.yml
     with:
       models: ${{ inputs.vertexai_models }}
@@ -55,7 +55,7 @@ jobs:
 
   # ── vLLM MaaS ──────────────────────────────────────────────────
   test-vllm-maas:
-    if: inputs.run_vllm_maas != false
+    if: github.event_name == 'schedule' || inputs.run_vllm_maas != false
     uses: ./.github/workflows/responses-vllm-maas.yml
     with:
       models: ${{ inputs.vllm_maas_models }}

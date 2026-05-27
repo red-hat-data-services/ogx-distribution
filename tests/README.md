@@ -57,7 +57,7 @@ Integration tests run the upstream [ogx pytest suite](https://github.com/ogx/ogx
 2. **Clones the ogx repository** at the matching version tag into `/tmp/ogx-integration-tests`.
 3. **Runs `pytest`** against `tests/integration/inference/` with required test dependencies installed, pointing at `distribution/config.yaml`.
    - `ogx-client` is required.
-   - `ollama` is explicitly installed because the upstream test fixtures import it, even though this distribution does not use Ollama as a provider.
+   - `ollama` is explicitly installed because the upstream test fixtures import it unconditionally (see [ogx-ai/ogx#5880](https://github.com/ogx-ai/ogx/issues/5880)).
 
 Tests are run for each configured inference model (vLLM, and optionally Vertex AI and OpenAI).
 

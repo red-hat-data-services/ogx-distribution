@@ -72,23 +72,24 @@ podman run \
 > [!NOTE]
 > The container image includes pre-installed dependencies for more providers than are present in the default runtime configuration (`config.yaml`). Providers such as `inline::sentence-transformers`, `inline::milvus`, and `inline::faiss` are available as dependencies but are stripped from the default `config.yaml`. The full provider manifest is maintained in `build.yaml`. To use these dependency-only providers, pass a custom `config.yaml` at runtime (as shown above) that includes the desired provider definitions. See the [distribution README](distribution/README.md) for which providers are dependency-only.
 
-## Weekly Responses API Tests
+## Responses API Tests
 
-A weekly orchestrator workflow (`responses-weekly.yml`) runs upstream Responses API integration tests against the distro image every Sunday at 22:00 UTC across all configured providers, then publishes an interactive test report to [GitHub Pages](https://opendatahub-io.github.io/ogx-distribution/).
+An orchestrator workflow (`responses-weekly.yml` / "Responses: Test Report") runs upstream Responses API integration tests against the distro image every Sunday at 22:00 UTC across all configured providers, then publishes an interactive test report to [GitHub Pages](https://opendatahub-io.github.io/ogx-distribution/).
 
-| Provider | Text models | Embedding model |
-|----------|-------------|-----------------|
-| OpenAI | gpt-4o-mini, gpt-4o, o4-mini | text-embedding-3-small |
-| Vertex AI | gemini-2.0-flash | gemini-embedding-2 |
-| vLLM MaaS | llama-3-2-3b | nomic-embed-text-v1-5 |
+| Provider | Default text model | Embedding model | Workflow |
+|----------|--------------------|-----------------|----------|
+| OpenAI | gpt-4.1-nano | text-embedding-3-small | `responses-openai.yml` |
+| Vertex AI | gemini-2.0-flash | gemini-embedding-2 | `responses-vertexai.yml` |
+| vLLM MaaS | llama-3-2-3b | nomic-embed-text-v1-5 | `responses-vllm-maas.yml` |
 
 ### How it works
 
 1. Each provider's credentials are checked; providers without secrets are skipped gracefully
-2. The shared `responses-run.yml` reusable workflow pulls the distro image, starts PostgreSQL (with pgvector) and the server container
-3. Upstream `tests/integration/responses/` are run with pytest per model, producing JUnit XML results
-4. A [test report](https://opendatahub-io.github.io/ogx-distribution/) with trend charts (by provider and by model) and a model breakdown table is deployed to GitHub Pages
-5. JUnit results are also published as GitHub Check annotations via [dorny/test-reporter](https://github.com/dorny/test-reporter)
+2. Each per-provider workflow (`responses-openai.yml`, `responses-vertexai.yml`, `responses-vllm-maas.yml`) pulls the distro image, starts PostgreSQL (with pgvector) and the server via the `setup-server` composite action
+3. Models run in parallel via GitHub Actions matrix strategy — each model gets its own job
+4. Upstream `tests/integration/responses/` are run with pytest in `--inference-mode=live`, producing JUnit XML results
+5. The orchestrator collects all artifacts and deploys a [test report](https://opendatahub-io.github.io/ogx-distribution/) with trend charts (by provider and by model) and a model breakdown table to GitHub Pages
+6. JUnit results are also published as GitHub Check annotations via [dorny/test-reporter](https://github.com/dorny/test-reporter)
 
 ### Test report
 
@@ -96,20 +97,20 @@ The report is a static HTML dashboard (no backend) with:
 - **Trend by Provider** and **Trend by Model** line charts showing passed test counts per OGX release (linked: clicking a provider filters the model chart)
 - **Model Breakdown** table with pass/fail/skip/error counts per provider and model
 - **Run History** table with links to GitHub Actions runs
-- History is kept for the last 20 runs
+- Branch-isolated history: `main` deploys to root, other branches to `preview/<branch>/` (last 20 runs each)
 
 ### Triggers
 
 | Trigger | Scope | Report location |
 |---------|-------|-----------------|
 | `schedule` (Sunday 22:00 UTC) | Runs from `main` | Root (`/`) |
-| `workflow_dispatch` | Any branch | `preview/<branch>/` for non-main branches |
+| `workflow_dispatch` | Any branch, per-provider toggles, model overrides | `preview/<branch>/` for non-main branches |
 
-Individual provider workflows (`responses-openai.yml`, etc.) can also be triggered manually via `workflow_dispatch` for on-demand runs without the report.
+Individual provider workflows can also be triggered manually via `workflow_dispatch` for on-demand runs (tests only, no report deployment).
 
 ### Adding providers and models
 
-To add a model: add an entry to `models_json` (text) or update `embedding_model` in the provider workflow. To add a provider: create a new caller workflow following the existing pattern and add the provider job to `responses-weekly.yml`. The report template is fully dynamic — new providers and models appear automatically.
+To override models: pass comma-separated model IDs via the `models` input when dispatching a provider workflow or the orchestrator. To add a provider: create a new per-provider workflow following the existing pattern and add the provider job to `responses-weekly.yml`. The report template is fully dynamic — new providers and models appear automatically.
 
 ### Required Secrets
 

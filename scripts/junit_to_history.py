@@ -45,7 +45,13 @@ def main():
 
     xml_files = sorted(glob(os.path.join(results_dir, "**", "*.xml"), recursive=True))
     if not xml_files:
-        print("No JUnit XML files found", file=sys.stderr)
+        print("No JUnit XML files found, writing empty history", file=sys.stderr)
+        history = []
+        if os.path.exists(history_file) and os.path.getsize(history_file) > 0:
+            with open(history_file) as f:
+                history = json.load(f)
+        with open(output_file, "w") as f:
+            json.dump(history, f, indent=2)
         sys.exit(0)
 
     models = []
