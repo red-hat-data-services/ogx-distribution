@@ -167,7 +167,7 @@ Making a chat request:
 # Choose "aaet-dev" if you are on the core OGX team.
 GEMINI_AI_PROJECT=aaet-dev
 
-curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent" \
+curl "https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent" \
   -H 'Content-Type: application/json' \
   -H "Authorization: Bearer $GEMINI_ACCESS_TOKEN" \
   -H "x-goog-user-project: $GEMINI_AI_PROJECT" \
