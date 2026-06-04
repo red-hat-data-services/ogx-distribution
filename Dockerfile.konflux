@@ -2,6 +2,7 @@ ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 
 ARG OGX_VERSION
+ARG TARGETARCH
 
 LABEL com.redhat.component="ogx-cpu-rhel9-container" \
       name="ogx/cpu-rhel9" \
@@ -26,6 +27,16 @@ COPY distribution/versions.env ${APP_ROOT}/versions.env
 RUN . ${APP_ROOT}/versions.env && \
     uv pip install --extra-index-url https://packages.redhat.com/api/pypi/public-rhai/rhoai/3.5-EA2/cpu-ubi9-test/simple \
         ogx==${OGX_VERSION} ogx-api==${OGX_VERSION} ogx-client==${OGX_CLIENT_VERSION}
+
+# Install milvus-lite for ppc64le
+RUN if [ "$TARGETARCH" = "ppc64le" ]; then \
+        pip install milvus-lite==2.5.1  --index-url https://wheels.developerfirst.ibm.com/ppc64le/linux/+simple/  && \
+        chmod 755 /opt/app-root/lib64/python3.12/site-packages/milvus_lite/lib/milvus && \
+
+        # Use the system libgcc_s.so.1 because the bundled copy requires a newer glibc
+        mv /opt/app-root/lib64/python3.12/site-packages/milvus_lite/lib/libgcc_s.so.1 \
+           /opt/app-root/lib64/python3.12/site-packages/milvus_lite/lib/libgcc_s.so.1.disabled; \
+    fi
 
 USER 0
 # install missing RPMs (online, requires subscription)
