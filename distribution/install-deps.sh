@@ -25,6 +25,7 @@ uv pip install \
     'pypdf>=6.7.2' \
     'sqlalchemy[asyncio]' \
     aiosqlite \
+    anthropic \
     asyncpg \
     boto3 \
     chardet \

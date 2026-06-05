@@ -66,6 +66,10 @@ providers:
       api_key: ${env.GEMINI_API_KEY:=}
       access_token: ${env.GEMINI_ACCESS_TOKEN:=}
       project: ${env.GEMINI_AI_PROJECT:=}
+  - provider_id: ${env.ANTHROPIC_API_KEY:+anthropic}
+    provider_type: remote::anthropic
+    config:
+      api_key: ${env.ANTHROPIC_API_KEY:=}
   vector_io:
   - provider_id: ${env.MILVUS_ENDPOINT:+milvus-remote}
     provider_type: remote::milvus
