@@ -109,7 +109,7 @@ jobs:
 
       - name: Setup CI environment
         id: setup
-        uses: derekhiggins/llama-stack-showroom@fad3dfe273d55357107929e36eb031706456fe88  # main as of 2026-04-23
+        uses: derekhiggins/llama-stack-showroom@f32973c9b7389b14d1988b55abfe74dd98c2432f  # main as of 2026-06-05
         with:
           catalog_image: ${{ inputs.catalog_image }}
           llama_stack_image: "image-registry.openshift-image-registry.svc:5000/redhat-ods-operator/ogx-test:${{ steps.build.outputs.tag }}"
