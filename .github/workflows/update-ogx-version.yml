@@ -11,7 +11,7 @@ permissions: {}
 env:
   TAG: ${{ github.event.client_payload.tag }}
   BRANCH: chore/update-ogx-${{ github.event.client_payload.tag }}
-  VERSION_FILE: distribution/build.py
+  VERSION_FILE: build/build.py
   SOURCE_RUN_URL: ${{ github.event.client_payload.source_run_url }}
   MIDSTREAM_REPO_URL: https://github.com/opendatahub-io/ogx
 
@@ -51,7 +51,7 @@ jobs:
           fi
 
       - name: Checkout main branch
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           ref: main
 
@@ -93,7 +93,7 @@ jobs:
       SLACK_GROUP_LLAMASTACK_RELEASE_MANAGERS: S0AHXK52HGD
     steps:
       - name: Checkout main branch
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           ref: main
           token: ${{ secrets.RELEASE_TOKEN }}
@@ -178,7 +178,7 @@ jobs:
 
           ## Test plan
 
-          - [ ] Review the generated `distribution/Containerfile` changes
+          - [ ] Review the generated `distribution/config.yaml` and `distribution/requirements.txt` changes
           - [ ] Verify the new tag exists in opendatahub-io/ogx
           - [ ] Merge and confirm the distribution container build succeeds
           EOF
