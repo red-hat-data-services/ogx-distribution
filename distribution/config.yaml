@@ -242,6 +242,7 @@ telemetry:
   enabled: true
 server:
   port: 8321
+  registry_refresh_interval_seconds: ${env.REGISTRY_REFRESH_INTERVAL_SECONDS:=300}
   auth:
     provider_config:
       type: ${env.AUTH_ISSUER:+oauth2_token}
