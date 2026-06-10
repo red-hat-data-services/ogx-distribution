@@ -70,7 +70,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
       - name: Determine deploy path
         id: deploy
@@ -97,18 +97,16 @@ jobs:
         run: find junit-results -type f 2>/dev/null || echo "No junit-results directory"
 
       - name: Get history from gh-pages
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         continue-on-error: true
         with:
           ref: gh-pages
           path: gh-pages
 
       - name: Build report
-        env:
-          OGX_VERSION: ""
         run: |
-          source distribution/versions.env
-          export OGX_VERSION="${OGX_VERSION}+${OGX_RHAI_VERSION}"
+          source build/build.env
+          export OGX_VERSION
 
           SUBFOLDER="${{ steps.deploy.outputs.subfolder }}"
           PUBLISH_DIR="publish/${SUBFOLDER}"
@@ -116,12 +114,12 @@ jobs:
 
           HISTORY_FILE="gh-pages/${SUBFOLDER:+$SUBFOLDER/}history.json"
 
-          python3 scripts/junit_to_history.py \
+          python3 .github/scripts/junit_to_history.py \
             junit-results \
             "$HISTORY_FILE" \
             "${PUBLISH_DIR}/history.json"
 
-          cp scripts/report-template.html "${PUBLISH_DIR}/index.html"
+          cp .github/scripts/report-template.html "${PUBLISH_DIR}/index.html"
 
       - name: Deploy to GitHub Pages
         if: ${{ !cancelled() }}
