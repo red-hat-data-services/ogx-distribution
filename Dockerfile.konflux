@@ -16,15 +16,6 @@ LABEL com.redhat.component="ogx-cpu-rhel9-container" \
       com.redhat.aiplatform.image="${BASE_IMAGE}"
 
 
-# Install milvus-lite for ppc64le
-RUN if [ "$TARGETARCH" = "ppc64le" ]; then \
-        pip install milvus-lite==2.5.1  --index-url https://wheels.developerfirst.ibm.com/ppc64le/linux/+simple/  && \
-        chmod 755 /opt/app-root/lib64/python3.12/site-packages/milvus_lite/lib/milvus && \
-
-        # Use the system libgcc_s.so.1 because the bundled copy requires a newer glibc
-        mv /opt/app-root/lib64/python3.12/site-packages/milvus_lite/lib/libgcc_s.so.1 \
-           /opt/app-root/lib64/python3.12/site-packages/milvus_lite/lib/libgcc_s.so.1.disabled; \
-    fi
 COPY distribution/constraints.txt ${APP_ROOT}/constraints.txt
 COPY distribution/requirements.txt ${APP_ROOT}/requirements.txt
 RUN uv pip install https://packages.redhat.com/api/pulp-content/public-rhai/rhoai/3.5/cpu-ubi9-test/models_dev-1.0.398-2-py3-none-any.whl \
