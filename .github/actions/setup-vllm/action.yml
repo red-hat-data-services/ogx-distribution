@@ -8,6 +8,10 @@ runs:
       run: |
         # Read MODEL_CACHE_DIR from the image so the action works with both
         # old images (/root/.cache) and new images (/opt/vllm/models).
+        # Pull if not already present (locally-built images are already loaded).
+        if ! docker image inspect "$VLLM_IMAGE" >/dev/null 2>&1; then
+          docker pull "$VLLM_IMAGE"
+        fi
         MODEL_DIR=$(docker inspect "$VLLM_IMAGE" --format '{{range .Config.Env}}{{println .}}{{end}}' \
           | grep '^MODEL_CACHE_DIR=' | cut -d= -f2)
         MODEL_DIR="${MODEL_DIR:-/opt/vllm/models}"
