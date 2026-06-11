@@ -143,7 +143,10 @@ providers:
   # Completions for all other providers. Depends on the inference API.
   - provider_id: builtin
     provider_type: inline::builtin
-    config: {}
+    config:
+      kvstore:
+        backend: kv_default
+        namespace: message_batches
   tool_runtime:
   # NOTE: inline::file-search requires a 'files' provider at runtime
   # (currently inline::localfs). Do not add inline::localfs to
