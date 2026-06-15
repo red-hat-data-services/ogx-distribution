@@ -17,7 +17,7 @@ You can see an overview of the APIs and Providers the image ships with in the ta
 | inference | inline::sentence-transformers | No | Dependency only* | Requires a custom `config.yaml` |
 | inference | remote::anthropic | No | ❌ | Set the `ANTHROPIC_API_KEY` environment variable |
 | inference | remote::azure | No | ❌ | Set the `AZURE_API_KEY` environment variable |
-| inference | remote::bedrock | No | ❌ | Set the `AWS_BEARER_TOKEN_BEDROCK` environment variable |
+| inference | remote::bedrock | No | ❌ | Set the `ENABLE_BEDROCK` environment variable |
 | inference | remote::gemini | No | ❌ | Set the `ENABLE_GEMINI` environment variable |
 | inference | remote::openai | No | ❌ | Set the `OPENAI_API_KEY` environment variable |
 | inference | remote::vertexai | No | ❌ | Set the `VERTEX_AI_PROJECT` environment variable |
