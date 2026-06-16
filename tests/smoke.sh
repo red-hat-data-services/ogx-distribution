@@ -24,6 +24,12 @@ function start_and_wait_for_ogx_container {
     --env "POSTGRES_DB=${POSTGRES_DB:-ogx}"
     --env "POSTGRES_USER=${POSTGRES_USER:-ogx}"
     --env "POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-ogx}"
+    --env "ENABLE_PGVECTOR=1"
+    --env "PGVECTOR_HOST=${POSTGRES_HOST:-localhost}"
+    --env "PGVECTOR_PORT=${POSTGRES_PORT:-5432}"
+    --env "PGVECTOR_DB=${POSTGRES_DB:-ogx}"
+    --env "PGVECTOR_USER=${POSTGRES_USER:-ogx}"
+    --env "PGVECTOR_PASSWORD=${POSTGRES_PASSWORD:-ogx}"
   )
 
   # Conditionally add vLLM API token (needed for MaaS)
