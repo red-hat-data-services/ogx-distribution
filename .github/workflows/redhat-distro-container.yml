@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - rhoai-v*
+      - release-*
       - konflux-poc*
     types:
       - opened
@@ -21,6 +22,7 @@ on:
     branches:
       - main
       - rhoai-v*
+      - release-*
 
   # build a custom image from an arbitrary ogx commit
   # NOTE: workflow_dispatch intentionally skips all tests (vllm setup, postgres setup, smoke tests, integration tests)
@@ -392,6 +394,16 @@ jobs:
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
 
+      - name: Compute branch-specific image tag
+        if: github.event_name == 'push'
+        run: |
+          if [[ "$GITHUB_REF" == refs/heads/rhoai-v* ]]; then
+            echo "BRANCH_TAG=${GITHUB_REF_NAME}-latest" >> "$GITHUB_ENV"
+          elif [[ "$GITHUB_REF" == refs/heads/release-* ]]; then
+            version="${GITHUB_REF_NAME#release-}"
+            echo "BRANCH_TAG=rhoai-v${version}-latest" >> "$GITHUB_ENV"
+          fi
+
       - name: Publish multi-arch image to Quay.io
         uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
         with:
@@ -399,7 +411,7 @@ jobs:
           file: Containerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ github.event_name == 'workflow_dispatch' && format('{0}:source-{1}-{2}', env.IMAGE_NAME, env.OGX_COMMIT_SHA, github.sha) || format('{0}:{1}{2}', env.IMAGE_NAME, github.sha, github.ref == 'refs/heads/main' && format(',{0}:latest', env.IMAGE_NAME) || (startsWith(github.ref, 'refs/heads/rhoai-v') && format(',{0}:{1}-latest', env.IMAGE_NAME, github.ref_name)) || '') }}
+          tags: ${{ github.event_name == 'workflow_dispatch' && format('{0}:source-{1}-{2}', env.IMAGE_NAME, env.OGX_COMMIT_SHA, github.sha) || format('{0}:{1}{2}', env.IMAGE_NAME, github.sha, github.ref == 'refs/heads/main' && format(',{0}:latest', env.IMAGE_NAME) || (env.BRANCH_TAG != '' && format(',{0}:{1}', env.IMAGE_NAME, env.BRANCH_TAG)) || '') }}
           cache-from: |
             type=gha,scope=build-amd64
             type=gha,scope=build-arm64

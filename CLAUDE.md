@@ -67,10 +67,10 @@ The OGX version is set in `build/build.env` (`OGX_VERSION`). The build script (`
 
 ### CI/CD
 
-- **`redhat-distro-container.yml`** — main workflow: builds multi-arch images, runs smoke + integration tests against vLLM (local CPU or MaaS) and PostgreSQL, publishes to Quay.io on push to `main`/`rhoai-v*`. Nightly scheduled builds test against OGX `main`.
+- **`redhat-distro-container.yml`** — main workflow: builds multi-arch images, runs smoke + integration tests against vLLM (local CPU or MaaS) and PostgreSQL, publishes to Quay.io on push to `main`/`rhoai-v*`/`release-*`. Nightly scheduled builds test against OGX `main`.
 - **`responses-weekly.yml`** — weekly Responses API test suite across OpenAI, Vertex AI, and vLLM MaaS providers; publishes results to GitHub Pages.
 - **Tekton** (`.tekton/`) — Konflux/RHOAI downstream build pipelines.
-- **`create-or-update-release-branch.yml`** — creates/updates `rhoai-v*` release branches.
+- **`create-or-update-release-branch.yml`** — creates/updates `release-*` release branches.
 
 ## Important Notes
 
