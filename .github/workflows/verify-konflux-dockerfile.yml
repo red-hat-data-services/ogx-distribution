@@ -1,0 +1,36 @@
+name: Verify Dockerfile.konflux is in sync
+
+on:
+  pull_request:
+    paths:
+      - 'Containerfile'
+      - 'Dockerfile.konflux'
+      - 'Dockerfile.konflux.in'
+      - 'scripts/sync_labels.py'
+  push:
+    branches: [main]
+    paths:
+      - 'Containerfile'
+      - 'Dockerfile.konflux'
+      - 'Dockerfile.konflux.in'
+      - 'scripts/sync_labels.py'
+
+jobs:
+  verify-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.12'
+
+      - name: Regenerate Dockerfile.konflux
+        run: python scripts/sync_labels.py
+
+      - name: Check for drift
+        run: |
+          if ! git diff --exit-code Dockerfile.konflux; then
+            echo "::error::Dockerfile.konflux is out of sync. Run 'python scripts/sync_labels.py' and commit the result."
+            exit 1
+          fi
