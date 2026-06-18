@@ -80,12 +80,14 @@ Format: `<type>(<optional scope>): <description>`
 
 Common type prefixes used in this repo:
 
+- `build:` — build system, dependencies, container image changes
+- `chore:` — maintenance, dependency updates, non-functional changes
+- `ci:` — CI/CD workflow changes
+- `docs:` — documentation-only changes
 - `feat:` — new feature or capability
 - `fix:` — bug fix
-- `chore:` — maintenance, dependency updates, non-functional changes
-- `docs:` — documentation-only changes
-- `ci:` — CI/CD workflow changes
 - `refactor:` — code restructuring without behavior change
+- `revert:` — revert a previous commit or PR
 - `test:` — adding or updating tests
 
 Examples of valid PR titles:
