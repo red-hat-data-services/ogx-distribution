@@ -25,7 +25,6 @@ COPY distribution/requirements.txt ${APP_ROOT}/requirements.txt
 # we are missing azure-ai-contentunderstanding, azure-ai-documentintelligence,
 # mammoth, speechrecognition, xlrd and youtube-transcript-api
 RUN sed -i 's/markitdown\[all\]/markitdown/' ${APP_ROOT}/requirements.txt \
-    && uv pip install https://packages.redhat.com/api/pulp-content/public-rhai/rhoai/3.5/cpu-ubi9-test/models_dev-1.0.398-2-py3-none-any.whl \
     && uv pip install --constraint ${APP_ROOT}/constraints.txt -r ${APP_ROOT}/requirements.txt \
     && for pkg in azure-identity lxml olefile openpyxl pandas pdfminer-six pdfplumber pydub python-pptx ; do \
         uv pip install "$pkg" ; \
