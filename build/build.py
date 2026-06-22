@@ -158,6 +158,7 @@ def generate_stripped_config():
     ryaml = YAML()
     ryaml.preserve_quotes = True
     ryaml.width = 4096
+    ryaml.indent(sequence=4, offset=2)
 
     with open(build_path, "r") as f:
         config = ryaml.load(f)
