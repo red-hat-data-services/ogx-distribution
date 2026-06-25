@@ -51,7 +51,7 @@ spec:
     value: true
   - name: prefetch-input
     value: |
-      []
+      [{"type": "generic", "path": "./distribution"}]
   - name: build-image-index
     value: true
   - name: enable-slack-failure-notification
