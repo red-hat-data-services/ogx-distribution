@@ -47,6 +47,8 @@ spec:
     value: Dockerfile.konflux
   - name: path-context
     value: .
+  - name: build-args-file
+    value: konflux/cpu-ubi9.conf
   - name: hermetic
     value: true
   - name: prefetch-input
