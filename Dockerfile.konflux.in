@@ -24,10 +24,11 @@ COPY distribution/requirements.txt ${APP_ROOT}/requirements.txt
 # "markitdown" then install the additional deps we have
 # we are missing azure-ai-contentunderstanding, azure-ai-documentintelligence,
 # mammoth, speechrecognition, xlrd and youtube-transcript-api
-RUN sed -i 's/markitdown\[all\]/markitdown/' ${APP_ROOT}/requirements.txt \
-    && uv pip install --constraint ${APP_ROOT}/constraints.txt -r ${APP_ROOT}/requirements.txt \
+RUN . /cachi2/cachi2.env \
+    && sed -i 's/markitdown\[all\]/markitdown/' ${APP_ROOT}/requirements.txt \
+    && uv pip install --no-index --find-links "${PIP_FIND_LINKS}" --constraint ${APP_ROOT}/constraints.txt -r ${APP_ROOT}/requirements.txt \
     && for pkg in azure-identity lxml olefile openpyxl pandas pdfminer-six pdfplumber pydub python-pptx ; do \
-        uv pip install "$pkg" ; \
+        uv pip install --no-index --find-links "${PIP_FIND_LINKS}" "$pkg" ; \
     done
 
 USER 0
