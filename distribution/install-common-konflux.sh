@@ -114,9 +114,3 @@ cp "${CACHI2_GENERIC}/minilm-tokenizer/tokenizer_config.json" "${MINILM_DIR}/tok
 # ---------- Fix ownership and permissions ----------
 chown -R 1001:0 "${DOCLING_ARTIFACTS_PATH}"
 chmod -R g=u "${DOCLING_ARTIFACTS_PATH}"
-
-# ---------- opencv-python swap ----------
-# Docling transitively pulls in opencv-python, which requires libGL.so.1
-# (absent in the UBI base image). Replace with the headless variant.
-uv pip uninstall opencv-python 2>/dev/null || true
-uv pip install --force-reinstall opencv-python-headless
