@@ -15,5 +15,3 @@ cp -r "${ARTIFACTS_DIR}/.cache" "${APP_ROOT}/.cache"
 HF_GRANITE_DIR="${APP_ROOT}/.cache/huggingface/hub/models--ibm-granite--granite-embedding-125m-english"
 mkdir -p "${HF_GRANITE_DIR}/refs"
 echo -n "prefetched" > "${HF_GRANITE_DIR}/refs/main"
-
-mkdir -p "${APP_ROOT}/.ogx"
