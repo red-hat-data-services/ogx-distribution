@@ -17,5 +17,3 @@ mkdir -p "${HF_GRANITE_DIR}/refs"
 echo -n "prefetched" > "${HF_GRANITE_DIR}/refs/main"
 
 mkdir -p "${APP_ROOT}/.ogx"
-chown -R 1001:0 "${APP_ROOT}/.cache/docling/models"
-chmod -R g=u "${APP_ROOT}/.cache/docling/models"
