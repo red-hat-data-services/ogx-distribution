@@ -32,10 +32,11 @@ COPY distribution/requirements.txt ${APP_ROOT}/requirements.txt
 # "markitdown" then install the additional deps we have
 # we are missing azure-ai-contentunderstanding, azure-ai-documentintelligence,
 # mammoth, speechrecognition, xlrd and youtube-transcript-api
-RUN sed -i 's/markitdown\[all\]/markitdown/' ${APP_ROOT}/requirements.txt \
-    && uv pip install --constraint ${APP_ROOT}/constraints.txt -r ${APP_ROOT}/requirements.txt \
+RUN . /cachi2/cachi2.env \
+    && sed -i 's/markitdown\[all\]/markitdown/' ${APP_ROOT}/requirements.txt \
+    && uv pip install --no-index --find-links "${PIP_FIND_LINKS}" --constraint ${APP_ROOT}/constraints.txt -r ${APP_ROOT}/requirements.txt \
     && for pkg in azure-identity lxml olefile openpyxl pandas pdfminer-six pdfplumber pydub python-pptx ; do \
-        uv pip install "$pkg" ; \
+        uv pip install --no-index --find-links "${PIP_FIND_LINKS}" "$pkg" ; \
     done
 
 USER 0
@@ -53,9 +54,9 @@ RUN ${APP_ROOT}/lib/tools/fromager-rpm-check.py --check-rpmdb \
     && ${APP_ROOT}/lib/tools/selftest.py
 
 # OGX configuration
-COPY --chmod=755 distribution/install-common.sh ${APP_ROOT}/install-common.sh
+COPY --chmod=755 distribution/install-common-konflux.sh ${APP_ROOT}/install-common-konflux.sh
 ENV DOCLING_ARTIFACTS_PATH="${APP_ROOT}/.cache/docling/models"
-RUN ${APP_ROOT}/install-common.sh
+RUN ${APP_ROOT}/install-common-konflux.sh
 ENV TIKTOKEN_CACHE_DIR="${APP_ROOT}/.cache/tiktoken"
 COPY distribution/config.yaml ${APP_ROOT}/config.yaml
 COPY --chmod=755 distribution/entrypoint.sh ${APP_ROOT}/entrypoint.sh
