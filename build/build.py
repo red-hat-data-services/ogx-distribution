@@ -8,6 +8,7 @@
 # Usage: ./build/build.py
 
 import base64
+import enum
 import shutil
 import subprocess
 import sys
@@ -28,9 +29,6 @@ _VERSION_PATTERN = re.compile(r"^[0-9a-zA-Z._+\-/]+$")
 
 OGX_GIT_REPO = "https://github.com/opendatahub-io/ogx.git"
 
-PINNED_DEPENDENCIES = ["milvus-lite>=3.0.0", "pymilvus!=2.6.10"]
-
-CONSTRAINTS_FILE = Path("distribution/constraints.txt")
 
 STRIPPED_PROVIDER_TYPES = {
     "inline::sentence-transformers",
@@ -90,40 +88,6 @@ def _resolve_ref_to_sha(repo_url: str, ref: str) -> str:
     return sha
 
 
-def _normalize_pkg_name(name: str) -> str:
-    """Normalize a package name per PEP 503 (lowercase, collapse [-_.] to -)."""
-    return re.sub(r"[-_.]+", "-", name).lower()
-
-
-def _parse_constraints(path: Path) -> dict[str, str]:
-    """Parse a pip constraints file and return {normalized_name: full_line}."""
-    constraints: dict[str, str] = {}
-    if not path.exists():
-        return constraints
-    for line in path.read_text().splitlines():
-        line = line.strip()
-        if not line or line.startswith("#"):
-            continue
-        match = re.match(r"^([a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?)", line)
-        if match:
-            constraints[_normalize_pkg_name(match.group(1))] = line
-    return constraints
-
-
-def _apply_constraints(packages: list[str], constraints: dict[str, str]) -> list[str]:
-    """Replace package specifiers with constrained versions where applicable."""
-    result = []
-    for pkg in packages:
-        match = re.match(r"^([a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?)", pkg)
-        if match:
-            name = _normalize_pkg_name(match.group(1))
-            if name in constraints:
-                result.append(constraints[name])
-                continue
-        result.append(pkg)
-    return result
-
-
 def _load_env(path: Path) -> dict[str, str]:
     """Load key=value pairs from an env file."""
     env = {}
@@ -141,12 +105,26 @@ class OgxRequirements(NamedTuple):
     ogx: str
 
 
-def _get_ogx_requirements() -> tuple[OgxRequirements, str | None]:
+class LockfileType(enum.StrEnum):
+    MIDSTREAM = "midstream"
+    DOWNSTREAM = "downstream"
+
+
+class IndexConfig(NamedTuple):
+    index_url: str
+    torch_backend: str | None = None
+
+
+class LockfileConfig(NamedTuple):
+    output_path: Path
+    index_options: IndexConfig
+
+
+def _get_ogx_requirements() -> OgxRequirements:
     """Resolve ogx package specifiers from build.env and environment.
 
-    Returns (requirements, version_tag). When installing from source, the git
-    tag is resolved to an immutable commit SHA via git ls-remote, and the
-    original tag is returned separately for use as a requirements.txt comment.
+    When installing from source, the git tag is resolved to an immutable
+    commit SHA via git ls-remote.
     """
     env = _load_env(Path(__file__).parent / "build.env")
 
@@ -158,12 +136,25 @@ def _get_ogx_requirements() -> tuple[OgxRequirements, str | None]:
         return OgxRequirements(
             ogx_api=f"ogx-api @ git+{OGX_GIT_REPO}@{sha}#subdirectory=src/ogx_api",
             ogx=f"ogx @ git+{OGX_GIT_REPO}@{sha}",
-        ), version
+        )
     else:
         return OgxRequirements(
             ogx_api=f"ogx-api=={version.split('+')[0]}",
             ogx=f"ogx=={version}",
-        ), None
+        )
+
+
+def _run(cmd: list[str], **kwargs) -> subprocess.CompletedProcess[str]:
+    """Run a command, printing stdout/stderr on failure."""
+    try:
+        return subprocess.run(cmd, check=True, capture_output=True, text=True, **kwargs)
+    except subprocess.CalledProcessError as e:
+        print(f"Error running: {shlex.join(cmd)}")
+        if e.stdout:
+            print(f"stdout: {e.stdout}")
+        if e.stderr:
+            print(f"stderr: {e.stderr}")
+        raise
 
 
 def assert_command_installed(command):
@@ -175,7 +166,9 @@ def assert_command_installed(command):
 
 @contextmanager
 def _build_venv(
-    packages: list[str], constraints: Path | None = None
+    packages: list[str],
+    index_options: IndexConfig,
+    constraints: Path | None = None,
 ) -> Generator[Path]:
     """Create a temporary venv with the given packages installed. Yields the venv path."""
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -194,21 +187,16 @@ def _build_venv(
             "install",
             "--python",
             str(venv_path / "bin" / "python"),
+            "--config-file", "/dev/null",
+            "--default-index", index_options.index_url,
             *packages,
         ]
         if constraints:
             cmd.extend(["--constraint", str(constraints)])
+        if index_options.torch_backend:
+            cmd.extend(["--torch-backend", index_options.torch_backend])
 
-        try:
-            subprocess.run(cmd, check=True, capture_output=True, text=True)
-        except subprocess.CalledProcessError as e:
-            print(f"Error installing packages into temporary venv: {e}")
-            if e.stdout:
-                print(f"stdout: {e.stdout}")
-            if e.stderr:
-                print(f"stderr: {e.stderr}")
-            raise
-
+        _run(cmd)
         yield venv_path
 
 
@@ -292,13 +280,7 @@ def get_dependencies(ogx_bin: Path) -> list[str]:
         tmp.write(resolved)
         tmp_path = tmp.name
     try:
-        cmd = [str(ogx_bin), "stack", "list-deps", tmp_path]
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"Error executing command: {e}")
-        print(f"Command output: {e.output}")
-        print(f"Command stderr: {e.stderr}")
-        sys.exit(1)
+        result = _run([str(ogx_bin), "stack", "list-deps", tmp_path])
     finally:
         os.unlink(tmp_path)
 
@@ -342,35 +324,75 @@ def get_opentelemetry_packages(bootstrap_bin: Path) -> list[str]:
     return packages
 
 
-def generate_requirements_file(
-    dependencies,
-    ogx_reqs: OgxRequirements,
-    otel_packages,
-    version_tag: str | None = None,
-):
-    """Generate requirements.txt with all Python dependencies."""
-    output_path = Path("distribution/requirements.txt")
-
-    all_packages = sorted(set(PINNED_DEPENDENCIES + dependencies + otel_packages))
-    all_packages = _apply_constraints(
-        all_packages, _parse_constraints(CONSTRAINTS_FILE)
-    )
-
-    ogx_lines = list(ogx_reqs)
-    if version_tag:
-        ogx_lines = [f"{line}  # {version_tag}" for line in ogx_lines]
-
-    lines = [
-        "# WARNING: This file is auto-generated. Do not modify it manually.",
-        "# Generated by: build/build.py",
-        *ogx_lines,
-        *all_packages,
+def _compile_lockfile(
+    requirements_path: Path,
+    output_path: Path,
+    index_options: IndexConfig,
+) -> None:
+    """Run uv pip compile to produce a pinned lock file with hashes."""
+    cmd = [
+        "uv", "pip", "compile",
+        "--constraint", str(Path("distribution/constraints.txt")),
+        "--python-platform", "linux",
+        "--python-version", "3.12",
+        "--generate-hashes",
+        "--config-file", "/dev/null",
+        "--default-index", index_options.index_url,
+        "--emit-index-url",
+        str(requirements_path),
+        "-o", str(output_path),
     ]
+    if index_options.torch_backend:
+        cmd.extend(["--torch-backend", index_options.torch_backend])
 
-    with open(output_path, "w") as f:
-        f.write("\n".join(lines) + "\n")
+    output_path.unlink(missing_ok=True)
+    _run(cmd)
 
     print(f"Successfully generated {output_path}")
+
+
+def _build_requirements(
+    dependencies: list[str],
+    ogx_reqs: OgxRequirements,
+    otel_packages: list[str],
+) -> list[str]:
+    """Combine all package specifiers into a sorted requirements list."""
+    all_packages = sorted(set(dependencies + otel_packages))
+    return [*ogx_reqs, *all_packages]
+
+
+def _write_temp_requirements(lines: list[str]) -> Path:
+    """Write package lines to a temporary requirements file. Caller must clean up."""
+    path = Path(tempfile.gettempdir()) / "requirements.txt"
+    path.write_text("\n".join(lines) + "\n")
+    return path
+
+
+def _get_lockfile_targets(
+    install_from_source: bool, rhai_index_url: str
+) -> dict[LockfileType, LockfileConfig]:
+    """Determine which lock files to generate based on build configuration."""
+    targets = {}
+    if install_from_source:
+        targets[LockfileType.MIDSTREAM] = LockfileConfig(
+            Path("distribution/requirements-lock.txt"),
+            IndexConfig(
+                index_url="https://pypi.org/simple",
+                torch_backend="cpu",
+            ),
+        )
+    if rhai_index_url:
+        targets[LockfileType.DOWNSTREAM] = LockfileConfig(
+            Path("distribution/requirements-lock-konflux.txt"),
+            IndexConfig(index_url=rhai_index_url),
+        )
+    if not targets:
+        print(
+            "Error: OGX_INSTALL_FROM_SOURCE=false and RHAI_INDEX_URL is not set. "
+            "At least one lock file target is required."
+        )
+        sys.exit(1)
+    return targets
 
 
 def generate_config_labels(version: str) -> str:
@@ -430,30 +452,49 @@ def generate_containerfile(version: str):
 
 
 def main():
-    ogx_reqs, version_tag = _get_ogx_requirements()
+    env = _load_env(Path(__file__).parent / "build.env")
+    install_from_source = env.get("OGX_INSTALL_FROM_SOURCE", "").lower() == "true"
+    rhai_index_url = os.getenv("RHAI_INDEX_URL") or env.get("RHAI_INDEX_URL", "")
+
+    ogx_reqs = _get_ogx_requirements()
 
     assert_command_installed("uv")
 
     print("Generating stripped config.yaml...")
     generate_stripped_config()
 
-    print("Getting dependencies...")
-    with _build_venv([*ogx_reqs]) as venv:
-        dependencies = get_dependencies(venv / "bin" / "ogx")
+    targets = _get_lockfile_targets(install_from_source, rhai_index_url)
 
-    print("Discovering opentelemetry instrumentation packages...")
-    with _build_venv(
-        [*ogx_reqs] + dependencies + PINNED_DEPENDENCIES,
-        constraints=CONSTRAINTS_FILE,
-    ) as venv:
-        otel_packages = get_opentelemetry_packages(
-            venv / "bin" / "opentelemetry-bootstrap"
-        )
+    for name, target in targets.items():
+        print(f"Generating {target.output_path}...")
 
-    print("Generating requirements.txt...")
-    generate_requirements_file(dependencies, ogx_reqs, otel_packages, version_tag)
+        print("  Getting dependencies...")
+        with _build_venv([*ogx_reqs], target.index_options) as venv:
+            dependencies = get_dependencies(venv / "bin" / "ogx")
 
-    env = _load_env(Path(__file__).parent / "build.env")
+        # Temporary: RHAI index doesn't have all markitdown[all] extras deps
+        if name == LockfileType.DOWNSTREAM:
+            dependencies = [re.sub(r"^markitdown\[.*\]", "markitdown", d) for d in dependencies]
+
+        print("  Discovering opentelemetry instrumentation packages...")
+        with _build_venv(
+            [*ogx_reqs] + dependencies,
+            target.index_options,
+            constraints=Path("distribution/constraints.txt"),
+        ) as venv:
+            otel_packages = get_opentelemetry_packages(
+                venv / "bin" / "opentelemetry-bootstrap"
+            )
+
+        requirements = _build_requirements(dependencies, ogx_reqs, otel_packages)
+
+        print("  Compiling lock file...")
+        tmp_path = _write_temp_requirements(requirements)
+        try:
+            _compile_lockfile(tmp_path, target.output_path, target.index_options)
+        finally:
+            os.unlink(tmp_path)
+
     version = _validate_version(os.getenv("OGX_VERSION") or env["OGX_VERSION"])
 
     print("Generating Containerfile...")

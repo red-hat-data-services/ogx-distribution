@@ -1,10 +1,10 @@
 FROM quay.io/opendatahub/odh-midstream-python-base-3-12:latest
 
-ENV UV_INDEX_STRATEGY=unsafe-best-match
+ENV UV_TORCH_BACKEND=cpu \
+    UV_CONFIG_FILE=/dev/null
 
-COPY distribution/constraints.txt ${APP_ROOT}/constraints.txt
-COPY distribution/requirements.txt ${APP_ROOT}/requirements.txt
-RUN uv pip install --constraint ${APP_ROOT}/constraints.txt -r ${APP_ROOT}/requirements.txt
+COPY distribution/requirements-lock.txt ${APP_ROOT}/requirements-lock.txt
+RUN uv pip install -r ${APP_ROOT}/requirements-lock.txt
 
 COPY --chmod=755 distribution/install-common.sh ${APP_ROOT}/install-common.sh
 ENV DOCLING_ARTIFACTS_PATH="${APP_ROOT}/.cache/docling/models"
