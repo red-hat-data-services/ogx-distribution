@@ -10,6 +10,7 @@ COPY distribution/requirements.txt ${APP_ROOT}/requirements.txt
 # variant after install, pinned to the exact version the resolver chose.
 RUN uv pip install --constraint ${APP_ROOT}/constraints.txt -r ${APP_ROOT}/requirements.txt \
     && OPENCV_VERSION=$(uv pip show opencv-python 2>/dev/null | awk '/^Version:/{print $2}') \
+    && [ -n "${OPENCV_VERSION}" ] || { echo "ERROR: opencv-python not found after install"; exit 1; } \
     && uv pip uninstall opencv-python \
     && uv pip install --constraint ${APP_ROOT}/constraints.txt "opencv-python-headless==${OPENCV_VERSION}"
 
