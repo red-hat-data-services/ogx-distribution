@@ -15,8 +15,11 @@ else
     exit 1
 fi
 
+# In DinD the container uid may differ from the host file owner,
+# so make build outputs writable by any user.
+chmod -R a+w "$REPO_ROOT/distribution" "$REPO_ROOT/Containerfile" 2>/dev/null || true
+
 exec "$runtime" run --rm \
-    --user "$(id -u):$(id -g)" \
     -v "$REPO_ROOT:/workspace:z" \
     -w /workspace \
     "$IMAGE" \
