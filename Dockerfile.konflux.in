@@ -17,18 +17,11 @@ LABEL com.redhat.component="ogx-cpu-rhel9-container" \
 
 {config_labels}
 
-COPY distribution/constraints.txt ${APP_ROOT}/constraints.txt
-COPY distribution/requirements.txt ${APP_ROOT}/requirements.txt
+COPY distribution/requirements-lock-konflux.txt ${APP_ROOT}/requirements-lock-konflux.txt
 
-# Not all of the "markitdown[all]" deps available, so install
-# "markitdown" then install the additional deps we have
-# we are missing azure-ai-contentunderstanding, azure-ai-documentintelligence,
-# mammoth, speechrecognition, xlrd and youtube-transcript-api
-RUN sed -i 's/markitdown\[all\]/markitdown/' ${APP_ROOT}/requirements.txt \
-    && uv pip install --constraint ${APP_ROOT}/constraints.txt -r ${APP_ROOT}/requirements.txt \
-    && for pkg in azure-identity lxml olefile openpyxl pandas pdfminer-six pdfplumber pydub python-pptx ; do \
-        uv pip install "$pkg" ; \
-    done
+RUN source /cachi2/cachi2.env \
+    && uv pip install --no-index --find-links "${PIP_FIND_LINKS}" \
+       -r ${APP_ROOT}/requirements-lock-konflux.txt
 
 USER 0
 # install missing RPMs (online, requires subscription)
