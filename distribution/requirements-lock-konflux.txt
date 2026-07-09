@@ -444,9 +444,11 @@ numpy==2.5.1 \
     #   shapely
     #   torchvision
     #   transformers
-ogx @ git+https://github.com/opendatahub-io/ogx.git@032e7ca919e5fddca281dad34141ecd011de4b05
+ogx==1.1.3+rhaiv.0 \
+    --hash=sha256:edcf5eaba4afeb531930e474823e8e80f84b378ec369a6a200f8870a364637aa
     # via -r /tmp/requirements.txt
-ogx-api @ git+https://github.com/opendatahub-io/ogx.git@032e7ca919e5fddca281dad34141ecd011de4b05#subdirectory=src/ogx_api
+ogx-api==1.1.3+rhaiv.0 \
+    --hash=sha256:5fee84ea37cd2ac707b7462ec3168aff240b4b3be5bc857d74433aceba2a1661
     # via
     #   -r /tmp/requirements.txt
     #   ogx
