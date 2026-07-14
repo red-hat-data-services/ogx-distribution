@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.12"
+# dependencies = ["pyyaml"]
+# ///
 
 import re
 
@@ -14,7 +17,7 @@ def extract_ogx_version():
 
     Returns:
         tuple: (version, repo_owner) where repo_owner is extracted from
-               OGX_GIT_REPO in build.py or defaults to 'opendatahub-io'
+               OGX_GIT_REPO in gen_lockfile.py or defaults to 'opendatahub-io'
     """
     versions_path = REPO_ROOT / "build" / "build.env"
 
