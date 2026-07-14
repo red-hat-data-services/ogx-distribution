@@ -6,7 +6,7 @@
 
 # /// script
 # requires-python = ">=3.12"
-# dependencies = ["pydantic-settings"]
+# dependencies = ["pydantic-settings>=2,<3"]
 # ///
 
 import enum

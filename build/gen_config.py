@@ -6,7 +6,7 @@
 
 # /// script
 # requires-python = ">=3.12"
-# dependencies = ["ruamel.yaml"]
+# dependencies = ["ruamel.yaml>=0.19,<1"]
 # ///
 
 import sys

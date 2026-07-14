@@ -7,7 +7,7 @@
 
 # /// script
 # requires-python = ">=3.12"
-# dependencies = ["pyyaml"]
+# dependencies = ["pyyaml>=6,<7"]
 # ///
 
 import re
