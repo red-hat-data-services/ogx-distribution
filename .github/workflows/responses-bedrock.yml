@@ -131,7 +131,7 @@ jobs:
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
           role-session-name: GitHubActions-Bedrock-${{ github.run_id }}
 
-      - name: Patch config for Bedrock model
+      - name: Patch config for Bedrock models
         shell: bash
         env:
           MODEL: ${{ matrix.model }}
@@ -147,6 +147,13 @@ jobs:
 
           model = os.environ["MODEL"]
           cfg = yaml.safe_load(open('/tmp/config-patched.yaml'))
+          inference_providers = cfg.setdefault('providers', {}).setdefault('inference', [])
+          if not any(p.get('provider_id') == 'sentence-transformers' for p in inference_providers):
+              inference_providers.append({
+                  'provider_id': 'sentence-transformers',
+                  'provider_type': 'inline::sentence-transformers',
+                  'config': {},
+              })
           cfg.setdefault('registered_resources', {}).setdefault('models', []).append({
               'metadata': {},
               'model_id': model,
