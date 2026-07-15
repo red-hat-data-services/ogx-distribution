@@ -76,6 +76,11 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39  # v8.2.0
 
+      - name: Regenerate distribution artifacts
+        uses: ./ogx-distribution/.github/actions/regenerate-artifacts
+        with:
+          working-directory: ogx-distribution
+
       - name: Build image
         id: build
         working-directory: ogx-distribution
@@ -100,11 +105,6 @@ jobs:
           fi
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           echo "Building image: ogx-test:$TAG"
-
-          uv run build/gen_config.py
-          uv run build/gen_lockfile.py
-          uv run build/gen_containerfile.py
-          uv run build/verify_secrets.py
           podman build -f Containerfile -t "ogx-test:$TAG" .
 
       - name: Setup CI environment
