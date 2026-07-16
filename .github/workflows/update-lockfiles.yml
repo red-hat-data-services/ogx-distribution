@@ -22,6 +22,7 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           token: ${{ secrets.RELEASE_TOKEN }}
+          persist-credentials: false
 
       - name: Install uv
         uses: astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39 # v8.2.0
@@ -51,6 +52,7 @@ jobs:
           PR_URL=$(gh pr list --head "$BRANCH" --state open --json url --jq '.[0].url' 2>/dev/null || echo "")
           if [ -n "$PR_URL" ]; then
             gh pr close "$BRANCH" --comment "Lockfiles are now up to date with \`main\`. Closing this PR."
+            git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             git push origin --delete "$BRANCH" 2>/dev/null || true
             echo "Closed stale PR and deleted branch"
           fi
@@ -63,11 +65,14 @@ jobs:
 
       - name: Create branch and push
         if: steps.changes.outputs.changed == 'true'
+        env:
+          RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: |
           git checkout -B "$BRANCH"
           git add distribution/requirements-lock.txt distribution/requirements-lock-konflux.txt
           git diff --cached --quiet && { echo "No changes to commit"; exit 0; }
           git commit -m "chore: update dependency lockfiles"
+          git remote set-url origin "https://x-access-token:${RELEASE_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git push --force origin "$BRANCH"
 
       - name: Create or update pull request
