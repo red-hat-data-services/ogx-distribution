@@ -449,11 +449,11 @@ numpy==2.5.1 \
     #   shapely
     #   torchvision
     #   transformers
-ogx==1.2.1+rhaiv.0 \
-    --hash=sha256:9cfa3bbb028be4b7e9134a7b046cba651df600721449a292267b5af8e2412a43
+ogx==1.2.2+rhaiv.0 \
+    --hash=sha256:f65684978fecb8f77b850121ba615c8a0a757738ccb50fc5a60a7ccc72e836df
     # via -r /tmp/requirements.txt
-ogx-api==1.2.1+rhaiv.0 \
-    --hash=sha256:2394e7a6809b889ab9d2eda81caefd5cac294bb7b01df81495a958c626987c46
+ogx-api==1.2.2+rhaiv.0 \
+    --hash=sha256:244143bbf125cffeb364ed49b45fb2be17674b020769b75e050930e0624be3fd
     # via
     #   -r /tmp/requirements.txt
     #   ogx
@@ -767,8 +767,8 @@ polyfactory==3.3.0 \
 portalocker==3.2.0 \
     --hash=sha256:45d3f49b3fa2769b5ef4f437a6972c1b4f9540c4cfab1ced1344396ef2e5f78d
     # via qdrant-client
-prometheus-client==0.25.0 \
-    --hash=sha256:34577aeee817238adf900bebb60c63697fa70d15d8f9e1c6984729cce45fb10f
+prometheus-client==0.26.0 \
+    --hash=sha256:347c1aa82def23527399fe7d4c54f0f9ead3026169d3377173ddebcb5f597756
     # via opentelemetry-exporter-prometheus
 protobuf==7.35.1 \
     --hash=sha256:181e87b451839ee061ccc0c6b9cea83c88273050eb1ca5cb87251579e107dc5e \
