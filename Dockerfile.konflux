@@ -51,11 +51,12 @@ USER ${CNB_USER_ID}:${CNB_GROUP_ID}
 RUN ${APP_ROOT}/lib/tools/fromager-rpm-check.py --check-rpmdb \
     && ${APP_ROOT}/lib/tools/selftest.py
 
-# copy pre-fetched model/data artifacts from the published OCI artifact image.
-# Files are stored .cache-relative, so they land under ${APP_ROOT}/.cache at the
-# paths OGX expects. Preserve CNB-user ownership (the old copy script ran as that
-# user), since the server reads the cache at runtime as the CNB user.
-COPY --from=ogx-artifact --chown=${CNB_USER_ID}:${CNB_GROUP_ID} /.cache ${APP_ROOT}/.cache
+# copy pre-fetched model/data artifacts from the published modelcar OCI image.
+# Files live under /models in the modelcar with the docling/huggingface/tiktoken
+# sub-layout OGX expects, so they land under ${APP_ROOT}/.cache at the right
+# paths. Preserve CNB-user ownership (the old copy script ran as that user),
+# since the server reads the cache at runtime as the CNB user.
+COPY --from=ogx-artifact --chown=${CNB_USER_ID}:${CNB_GROUP_ID} /models ${APP_ROOT}/.cache
 # HF hub resolves the embedding model by repo ID via a refs/main marker. The
 # artifact provides it directly; recreate it defensively in case it is absent.
 RUN HF_DIR="${APP_ROOT}/.cache/huggingface/hub/models--ibm-granite--granite-embedding-125m-english" \
