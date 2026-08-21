@@ -449,11 +449,11 @@ numpy==2.5.1 \
     #   shapely
     #   torchvision
     #   transformers
-ogx==1.2.2+rhaiv.0 \
-    --hash=sha256:f65684978fecb8f77b850121ba615c8a0a757738ccb50fc5a60a7ccc72e836df
+ogx==1.2.4+rhaiv.0 \
+    --hash=sha256:0493747a318783e2557471e9445b70fc5e351cceec4e36c38dd5a52deda8a042
     # via -r /tmp/requirements.txt
-ogx-api==1.2.2+rhaiv.0 \
-    --hash=sha256:244143bbf125cffeb364ed49b45fb2be17674b020769b75e050930e0624be3fd
+ogx-api==1.2.4+rhaiv.0 \
+    --hash=sha256:7e67e4ca13088962f900f088959c6b8d6e871d8b229a35bf14c67aa56b2ff8d1
     # via
     #   -r /tmp/requirements.txt
     #   ogx
