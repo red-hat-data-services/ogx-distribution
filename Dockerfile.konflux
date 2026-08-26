@@ -1,10 +1,13 @@
 # WARNING: This file is auto-generated from Dockerfile.konflux.in
 # by scripts/sync_labels.py - do not edit manually.
-# Model/data files come from a pre-published, ProdSec-scanned OCI artifact.
-# Referencing it as a build stage lets Konflux resolve/pull it during the
-# pre-pull phase (before network isolation), so the copy below stays hermetic.
-ARG OGX_ARTIFACT_IMAGE
-FROM ${OGX_ARTIFACT_IMAGE} AS ogx-artifact
+# Model/data files come from a pre-published, ProdSec-scanned "modelcar" OCI
+# image. The modelcar stores every file under /models in the .cache-relative
+# layout OGX expects (docling/huggingface/tiktoken), including the HF hub
+# refs/main marker. Referencing it as a build stage lets Konflux resolve/pull it
+# during the pre-pull phase (before network isolation), so the copy below stays
+# hermetic.
+ARG OGX_MODELCAR_IMAGE
+FROM ${OGX_MODELCAR_IMAGE} AS modelcar
 
 ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
@@ -51,17 +54,19 @@ USER ${CNB_USER_ID}:${CNB_GROUP_ID}
 RUN ${APP_ROOT}/lib/tools/fromager-rpm-check.py --check-rpmdb \
     && ${APP_ROOT}/lib/tools/selftest.py
 
-# copy pre-fetched model/data artifacts from the published modelcar OCI image.
-# Files live under /models in the modelcar with the docling/huggingface/tiktoken
-# sub-layout OGX expects, so they land under ${APP_ROOT}/.cache at the right
-# paths. Preserve CNB-user ownership (the old copy script ran as that user),
-# since the server reads the cache at runtime as the CNB user.
-COPY --from=ogx-artifact --chown=${CNB_USER_ID}:${CNB_GROUP_ID} /models ${APP_ROOT}/.cache
-# HF hub resolves the embedding model by repo ID via a refs/main marker. The
-# artifact provides it directly; recreate it defensively in case it is absent.
-RUN HF_DIR="${APP_ROOT}/.cache/huggingface/hub/models--ibm-granite--granite-embedding-125m-english" \
-    && mkdir -p "${HF_DIR}/refs" \
-    && printf 'prefetched' > "${HF_DIR}/refs/main"
+# Model/data artifacts from the modelcar build stage. Files are stored
+# .cache-relative under /models, so their contents land under ${APP_ROOT}/.cache
+# at the paths OGX expects (including the HF hub refs/main marker, which the
+# modelcar provides directly). Preserve CNB-user ownership, since the server
+# reads the cache at runtime as the CNB user.
+COPY --from=modelcar --chown=${CNB_USER_ID}:${CNB_GROUP_ID} /models ${APP_ROOT}/.cache
+# Drop the modelcar's docs, then verify the expected model trees are present
+# (hard-fails a bad/empty modelcar rather than shipping a broken image).
+RUN rm -f ${APP_ROOT}/.cache/README.md ${APP_ROOT}/.cache/modelcard.md \
+    && for d in docling huggingface tiktoken; do \
+         { [ -d "${APP_ROOT}/.cache/${d}" ] && [ -n "$(ls -A "${APP_ROOT}/.cache/${d}")" ]; } \
+           || { echo "ERROR: model/data cache missing or empty: .cache/${d}" >&2; exit 1; }; \
+       done
 ENV DOCLING_ARTIFACTS_PATH="${APP_ROOT}/.cache/docling/models"
 ENV HF_HOME="${APP_ROOT}/.cache/huggingface"
 ENV TIKTOKEN_CACHE_DIR="${APP_ROOT}/.cache/tiktoken"
