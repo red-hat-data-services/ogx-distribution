@@ -5,9 +5,9 @@
 # during the pre-pull phase (before network isolation), so the copy below stays
 # hermetic.
 ARG OGX_MODELCAR_IMAGE
-FROM ${OGX_MODELCAR_IMAGE} AS modelcar
-
 ARG BASE_IMAGE
+
+FROM ${OGX_MODELCAR_IMAGE} AS modelcar
 FROM ${BASE_IMAGE}
 
 ARG OGX_VERSION
