@@ -52,21 +52,6 @@ attrs==26.1.0 \
     # via
     #   jsonschema
     #   referencing
-azure-ai-contentunderstanding==1.2.0b3 \
-    --hash=sha256:d668da1b9760a4e67dd64547a3865ae459d2c909c0e91508e1ae524ceabd7362
-    # via markitdown
-azure-ai-documentintelligence==1.0.2 \
-    --hash=sha256:34e712171b5186380f302caf0f90396060ca2ae7bd60e9463fc9ad61a63dd58e
-    # via markitdown
-azure-core==1.41.0 \
-    --hash=sha256:9b2b4963e5b4d877666ed549cf51f93b586ca1e85a64ab08b160796a2c23b58e
-    # via
-    #   azure-ai-contentunderstanding
-    #   azure-ai-documentintelligence
-    #   azure-identity
-azure-identity==1.25.3 \
-    --hash=sha256:8cd09e6d7c1514228089172b47ab79c6044d222c03dd0d037841c6b7d6847cd1
-    # via markitdown
 beautifulsoup4==4.15.0 \
     --hash=sha256:093525ef67b60a99bc418b266eb9af9f096b422f73ccd397d5b7df8ef020a670
     # via
@@ -104,7 +89,6 @@ charset-normalizer==3.5.1 \
     --hash=sha256:aeac1eeb950a89b952cf6a9e60411e92a706e116c76ba6182a1834daf9ae2f32
     # via
     #   markitdown
-    #   pdfminer-six
     #   requests
 click==8.5.0 \
     --hash=sha256:87dddcbfce6b3967d8bd284f76304e1c6c9e491552a0eafa332d2613d52306b5
@@ -117,9 +101,6 @@ click==8.5.0 \
 cloudpickle==3.1.2 \
     --hash=sha256:a796d78b6c6ee2fec31ec4a44e74a44565cd914b373f28c382d5de60f6da232f
     # via joblib
-cobble==0.1.4 \
-    --hash=sha256:48ca4a7e46a1231a1400de17db84b3e5ff348e194620e4430c2626190aa6ba3f
-    # via mammoth
 colorlog==6.12.0 \
     --hash=sha256:c8e1c1916d04dff540de17efd5401dcda28800844858abfa49d4bcc0bb3f1d73
     # via rapidocr
@@ -135,10 +116,7 @@ cryptography==50.0.1 \
     --hash=sha256:cbab34813a87e21ef5fc14a049859984e8b0bb6da890d4fedd2cd941c316f05d \
     --hash=sha256:cbfd8106711fa3284a3ee7b0beba311125a3e32678b47db019921ad95050a0ff
     # via
-    #   azure-identity
     #   google-auth
-    #   msal
-    #   pdfminer-six
     #   pyjwt
 cycler==0.12.1 \
     --hash=sha256:315f6d03c4a0937fdfad775450228fb02e127d516e38f9f5a45818c7861abe4d
@@ -150,7 +128,6 @@ defusedxml==0.7.1 \
     #   docling-slim
     #   markitdown
     #   nltk
-    #   youtube-transcript-api
 dill==0.4.1 \
     --hash=sha256:dfabac0123f51ca3bdd613902a9580eb086a1448ddb4d3d7b42af753f633853b
     # via multiprocess
@@ -323,11 +300,6 @@ idna==3.19 \
     #   httpx
     #   httpx2
     #   requests
-isodate==0.7.2 \
-    --hash=sha256:cf2450005fd7e00178a83a9e4cceef344af8b37be217ed42f3e413aa04f6f957
-    # via
-    #   azure-ai-contentunderstanding
-    #   azure-ai-documentintelligence
 jinja2==3.1.6 \
     --hash=sha256:fba973f3495c14a0ddfa2f1bbae1195a65ff3d8fe43147111779f9fd2d6710c1
     # via
@@ -380,7 +352,6 @@ lxml==6.1.3 \
     --hash=sha256:c0bcfe67d062d1e1b148f798bb7bbcef8898af0fb19066a2c41bb56fa08ce2d0
     # via
     #   doclang
-    #   markitdown
     #   python-docx
     #   python-pptx
 magika==0.6.3 \
@@ -389,9 +360,6 @@ magika==0.6.3 \
 mail-parser==4.6.4 \
     --hash=sha256:cc2d2f6d47a6f340c4aa66789f6d41a24162d45214c3cb5db12e6dc4b5705a2c
     # via docling-slim
-mammoth==1.11.0 \
-    --hash=sha256:f25269e07805e9aec7f8c60b30a6767a009c2a1a9668c3bd22fe4f752f047f37
-    # via markitdown
 markdown-it-py==4.2.0 \
     --hash=sha256:32bd4bc84ef825135802dd1c04983977b54436dce26e2c75234770ba58557b63
     # via rich
@@ -438,14 +406,6 @@ mpire==2.10.2 \
 mpmath==1.3.0 \
     --hash=sha256:9ebbfc07a8f452a9284feb5f8225b34d282c5f418580628862eaf88791f966de
     # via sympy
-msal==1.38.0 \
-    --hash=sha256:e78296ff001c5b8d6d019d613e10fdddbcac21e7a1eef6c5acc705e87bdc51b2
-    # via
-    #   azure-identity
-    #   msal-extensions
-msal-extensions==1.3.1 \
-    --hash=sha256:cee682b54e95c087478b4b1194794ca77203ae23a641b5f0b58ca2c27de239ae
-    # via azure-identity
 multiprocess==0.70.16 \
     --hash=sha256:bcbadd9a523953bf451aa0a73bd6cc641c7ce36adedee4dc190b2763c94f0788
     # via mpire
@@ -494,9 +454,7 @@ ogx-api==1.3.1+rhaiv.0 \
     #   ogx
 olefile==0.47 \
     --hash=sha256:ca07b289f721a58095f349d0149539befed54c069df97302d3ae7009ea9755a3
-    # via
-    #   markitdown
-    #   python-oxmsg
+    # via python-oxmsg
 omegaconf==2.3.1 \
     --hash=sha256:e662f1c0660e1b9185dd8f400ba244384e1e1f6a7372d88f4d95466c101770c5
     # via rapidocr
@@ -519,9 +477,7 @@ opencv-python==4.14.0.94 \
     # via rapidocr
 openpyxl==3.1.5 \
     --hash=sha256:795edac7ed59e5ffad2af2a6c0ddb0364156e1eedee8276981b22a337f94774e
-    # via
-    #   docling-slim
-    #   markitdown
+    # via docling-slim
 opentelemetry-api==1.44.0 \
     --hash=sha256:b1e0c91a2b18caba1bef91686bfa26bf8157d04c06bd36dc4c782093fe9a70f2
     # via
@@ -777,16 +733,7 @@ pandas==3.0.5 \
     # via
     #   -r /tmp/requirements.txt
     #   docling-core
-    #   markitdown
     #   pymilvus
-pdfminer-six==20260107 \
-    --hash=sha256:68c9b99ae0a806784424ff69a26bc39f737742e038be01f3ffd0e5b519e978c1
-    # via
-    #   markitdown
-    #   pdfplumber
-pdfplumber==0.11.10 \
-    --hash=sha256:0eeaad072e2caa9ec9e59e2b0146872f375dcea402577ee3ed4a81c067bb5516
-    # via markitdown
 pgvector==0.5.0 \
     --hash=sha256:5f5754f8717befec8a67290737d34d2b7ad3b6f75e122f1d7578fb176c1a2300
     # via -r /tmp/requirements.txt
@@ -802,7 +749,6 @@ pillow==12.3.0 \
     #   docling-parse
     #   docling-slim
     #   matplotlib
-    #   pdfplumber
     #   python-pptx
     #   rapidocr
     #   torchvision
@@ -885,9 +831,6 @@ pydantic-settings==2.15.0 \
     #   docling-core
     #   docling-slim
     #   mcp
-pydub==0.25.1 \
-    --hash=sha256:0b1750d21a16018107a1a4a16cc91418758a3aa83b958f331daae55186154ad9
-    # via markitdown
 pygments==2.21.0 \
     --hash=sha256:7132f8bc907a2491cc1e51a85e06f4b163aff46dafdcf23b54eac8cacff3c16d
     # via
@@ -897,7 +840,6 @@ pyjwt==2.13.0 \
     --hash=sha256:4ba4015b552fa65aefa6eebdf85d9a60971f7f0e12b3c7df706d25c5ad89afef
     # via
     #   mcp
-    #   msal
     #   ogx
 pylatexenc==2.11 \
     --hash=sha256:721a32bbd9b646ebe4a352f550d03695f072a0bf23b26b3f21943491fb8390d7
@@ -921,9 +863,7 @@ pypdf==6.18.0 \
     # via -r /tmp/requirements.txt
 pypdfium2==5.13.0 \
     --hash=sha256:1c7c05130540fbff4b31bc0a93a575d09ded766d049e3ce16ca0651d781dd7a3
-    # via
-    #   docling-slim
-    #   pdfplumber
+    # via docling-slim
 python-dateutil==2.9.0.post0 \
     --hash=sha256:e3d7c7c7054ebe488f9bb1e1f14a22955c9c5e4b1ac4f0cefefa25c2e3a30f4c
     # via
@@ -949,9 +889,7 @@ python-oxmsg==0.0.2 \
     # via docling-slim
 python-pptx==1.0.2 \
     --hash=sha256:6eb7fdfacac80d839dc875b454c8312d6557b6100f00db3e4895aaec82c6e6a4
-    # via
-    #   docling-slim
-    #   markitdown
+    # via docling-slim
 pyyaml==6.0.3 \
     --hash=sha256:301a160656813f221026e4fd2c85d4111d0b5192c1a80f8db79e1dffbabc6529 \
     --hash=sha256:83982a498df4026bda147955348d1927bac51e67583af98771cee21a19643896 \
@@ -992,17 +930,14 @@ requests==2.34.2 \
     --hash=sha256:a9af2e58bdfc2ce308285230ae028e85344a322a84aad258bffecc98ba875bb8
     # via
     #   -r /tmp/requirements.txt
-    #   azure-core
     #   docling-slim
     #   google-auth
     #   google-genai
     #   markitdown
-    #   msal
     #   opentelemetry-exporter-otlp-proto-http
     #   pymilvus
     #   rapidocr
     #   tiktoken
-    #   youtube-transcript-api
 rich==15.0.0 \
     --hash=sha256:135bfc6b6356c79081d17e313431b9724fc5b750fdcbca3d7ec8cb4fdd009d50
     # via
@@ -1091,9 +1026,6 @@ sniffio==1.3.1 \
 soupsieve==2.9.2 \
     --hash=sha256:b81a181d6c9cd38ad7601c45fd1ffd7c689239e2a2c95632c41c97d2f5cea6e2
     # via beautifulsoup4
-speechrecognition==3.17.0 \
-    --hash=sha256:dd49d255fc1ab26400992e39bf8bb474a54b8a9310eb912e262df1740cb2bf09
-    # via markitdown
 sqlalchemy==2.0.52 \
     --hash=sha256:462ae1ad8f151f02d8333b90a68ecf9111de9e6f4968e616dbdcd6588da1c7be \
     --hash=sha256:55b106ba510f7cd996f8f24ccc016839cacc1611e88ea6701651d09b2e204648 \
@@ -1252,10 +1184,6 @@ typing-extensions==4.16.0 \
     # via
     #   anthropic
     #   anyio
-    #   azure-ai-contentunderstanding
-    #   azure-ai-documentintelligence
-    #   azure-core
-    #   azure-identity
     #   beautifulsoup4
     #   docling-core
     #   fastapi
@@ -1278,7 +1206,6 @@ typing-extensions==4.16.0 \
     #   python-pptx
     #   referencing
     #   sentence-transformers
-    #   speechrecognition
     #   sqlalchemy
     #   starlette
     #   torch
@@ -1331,15 +1258,9 @@ wrapt==2.4.0 \
     #   opentelemetry-instrumentation-threading
     #   opentelemetry-instrumentation-urllib3
     #   opentelemetry-util-genai
-xlrd==2.0.2 \
-    --hash=sha256:a520af2e260cbe3dd0f0e2e33c365b5d6394ac991d2befca4b4121124f3d4844
-    # via markitdown
 xlsxwriter==3.2.9 \
     --hash=sha256:9d229fcd86ced004d0ec560f85751d88f3d2f2dbbdddce134618418bda8d5b9a
     # via python-pptx
-youtube-transcript-api==1.0.3 \
-    --hash=sha256:8391b74280e9ec471e4e489d5909c20ab97e8d4d5bdb46f493ba88a302cb9f90
-    # via markitdown
 zstandard==0.25.0 \
     --hash=sha256:22149ea61b324aa011406b6a898bd59fed2d8b888995bcda71199a7e94290191 \
     --hash=sha256:81a032ed4420ee8d92e528724b63234eb9491af083c05879d8bf64ecb83db433 \

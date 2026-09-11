@@ -306,6 +306,14 @@ def main():
         with _build_venv([*ogx_reqs], target.index_config) as venv:
             dependencies = _get_dependencies(venv / "bin" / "ogx")
 
+        # markitdown[all] pulls in speechrecognition, which vendors a 32-bit i386
+        # FLAC binary. The AIPCC base images ship no 32-bit glibc, so
+        # fromager-rpm-check rejects the image build.
+        if name == LockfileType.DOWNSTREAM:
+            dependencies = [
+                re.sub(r"^markitdown\[.*\]", "markitdown", d) for d in dependencies
+            ]
+
         print("  Discovering opentelemetry instrumentation packages...")
         with _build_venv(
             [*ogx_reqs] + dependencies,
