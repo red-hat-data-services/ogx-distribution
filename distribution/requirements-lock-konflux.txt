@@ -73,11 +73,11 @@ beautifulsoup4==4.15.0 \
     #   docling-slim
     #   markdownify
     #   markitdown
-boto3==1.43.89 \
-    --hash=sha256:4c703ce98ed1beaf54d993e034d98c2bd27a6674dbfddc38e0dff2c1328cfbbf
+boto3==1.43.90 \
+    --hash=sha256:928ccaf18e8ed7fc54ae5e5abef2822dd16f3f44683ddaa0b5ad6496a5901850
     # via -r /tmp/requirements.txt
-botocore==1.43.89 \
-    --hash=sha256:a87ff037e64465941f81d3471c4338afdbd7085dd0ede96095e15b2653c6b18f
+botocore==1.43.90 \
+    --hash=sha256:84db0cf501d73f0334d400c174eafb07fc07a9c849679a36188af8dadd60cb02
     # via
     #   boto3
     #   s3transfer
@@ -174,11 +174,10 @@ docling-core==2.95.0 \
 docling-ibm-models==4.0.2 \
     --hash=sha256:b00c09fd5ac5655130e580c470efab87797587f80408bb7f5dcb033537cde455
     # via docling-slim
-docling-parse==7.17.0 \
-    --hash=sha256:2aaac1056893e6f06be3d84fb04e34bee7f3cb556e3b18fd8674742f840f7f35 \
-    --hash=sha256:9374b35e744f19940d1643b02bfa45977a0c27ae11ef5ba0bb237fc9402c4c9e \
-    --hash=sha256:a655165e72334cacd08dff8d55de1b805326f6fa044efe35a670483940a8fbbf \
-    --hash=sha256:b16ca3ecebc5153dcabb0a1c15057fcc5eac36a972b095456f741b92447a7a49
+docling-parse==7.18.0 \
+    --hash=sha256:19493d26cc7e330b83237915bea398618941305f801730ce7526e7377f04ffe2 \
+    --hash=sha256:55bd7a9882513d649aec72b25dec58ad70fbf137bc93ee7bb1e9ca6bd7a20c11 \
+    --hash=sha256:869afc4c1ce1f94fca1217344f9b68278c53fcb0c77274662fff71de87be03d2
     # via docling-slim
 docling-slim==2.126.0 \
     --hash=sha256:10484e6e09e9bad31f251d12ffda366a84aa1eaea2d91737a52926bda0cdee44
@@ -211,8 +210,8 @@ fastapi==0.141.1 \
     #   -r /tmp/requirements.txt
     #   ogx
     #   ogx-api
-filelock==3.32.5 \
-    --hash=sha256:b2d1631017dbf4e755aa216bf27a33c1d8386c4fffd4ea80a55eeed8bbf5a6d5
+filelock==3.32.6 \
+    --hash=sha256:5a332d0fac7498e033bbd72bc8cfff4d9a396b824b1f45dba583016f65665112
     # via
     #   huggingface-hub
     #   torch
@@ -449,8 +448,8 @@ msal-extensions==1.3.1 \
 multiprocess==0.70.16 \
     --hash=sha256:bcbadd9a523953bf451aa0a73bd6cc641c7ce36adedee4dc190b2763c94f0788
     # via mpire
-narwhals==2.25.0 \
-    --hash=sha256:adbab6b85142191d33c69a5f683da4d3ab483828a0cb3e6c16de6efa8afd2f65
+narwhals==2.26.0 \
+    --hash=sha256:ad664683a0e573e1a3666bf87c2a878a94f032cb63834a870989e9ca271d579f
     # via scikit-learn
 networkx==3.6.1 \
     --hash=sha256:cf13e752b157f3b94b6bdef4be9c98f01901a8ba80084f7e3a87bc9778905f5f
@@ -506,8 +505,8 @@ onnxruntime==1.25.0 \
     --hash=sha256:cef48b2d4263ae900ad3daa70d2262ca4c058658f5564db7d9cfd7f5f908cbc4 \
     --hash=sha256:eeee14eaff8ff09d7ef95f8d65f54775ae0da28889cffab73af4e0ca49c61ecd
     # via magika
-openai==3.8.0 \
-    --hash=sha256:14a3fca283af52ea35d263556cfb4255bdf1cc5770955edce36d50efa4852a6a
+openai==3.10.0 \
+    --hash=sha256:37f724ae6cbc91388621409d02fcaccb493fe9da7c917bf178325222a9ba1cc1
     # via
     #   ogx
     #   ogx-api
