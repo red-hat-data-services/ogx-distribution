@@ -176,7 +176,8 @@ docling-ibm-models==4.0.2 \
 docling-parse==7.19.1 \
     --hash=sha256:2583032e81ac860812c0bbdbadb9ee902aa77ddb922165de76d15f6523af868e \
     --hash=sha256:9540ea19affb585a99564421aa38ad809f791cb2e2efd9a7e5ab4853796785dd \
-    --hash=sha256:bc01d0933d09c6e817bdb678c546ecc15894281dcd66a202980aef467e435a06
+    --hash=sha256:bc01d0933d09c6e817bdb678c546ecc15894281dcd66a202980aef467e435a06 \
+    --hash=sha256:ee2d5fcde7d5a22e2e1fb07b1341f7a24fa00609aa9c43b81bba9e64d3b14707
     # via docling-slim
 docling-slim==2.126.0 \
     --hash=sha256:10484e6e09e9bad31f251d12ffda366a84aa1eaea2d91737a52926bda0cdee44
@@ -331,11 +332,11 @@ jinja2==3.1.6 \
     # via
     #   ogx
     #   torch
-jiter==0.16.0 \
-    --hash=sha256:024799304a37216cc9bb15b106fc44412c9ab46b612069ce7880f892c3361a4e \
-    --hash=sha256:5ba70db765f2704c336ff3e7e770230784cd7167be6d0f67fdbe37370517de2f \
-    --hash=sha256:b3bc2cb5bcd14d72e512b1810a5c0d668b007b719b761c5ce85bb664362f0c7b \
-    --hash=sha256:ce09a2f580817c26daa57d4945437bc9471eb2015bf34666202e1b96e4870a84
+jiter==0.17.0 \
+    --hash=sha256:2ead9d1e79518e5dd7deb72f6b1d5100034d75c3cd0ae3cca23271bcfaf6864d \
+    --hash=sha256:80c957e9e0a4974eec15e7bf7a29d5620a781fe206f7f42b132bd422bbb8c33b \
+    --hash=sha256:96dbbc5ad08e175040e3ca73e40fbdecf5ae6573894e4497e39c00c045ba1b6f \
+    --hash=sha256:efac6e45977568dc617227d4df9b6ff1782703bc75f6d18bd9082150751a9d55
     # via
     #   anthropic
     #   openai
@@ -411,7 +412,8 @@ markupsafe==3.0.3 \
 matplotlib==3.11.2 \
     --hash=sha256:614924823ebec53c54758a480e508077fc63503a90bd93e9483397fe5b7442ab \
     --hash=sha256:77f6ea0f133e304c3342bff9abe2855c40f264c1ff3c4acc0adb5ac7c75730d3 \
-    --hash=sha256:d73be8035b961221671516fa77a9556729e2bc72b8abb23b3e14a415b9e8d2f2
+    --hash=sha256:d73be8035b961221671516fa77a9556729e2bc72b8abb23b3e14a415b9e8d2f2 \
+    --hash=sha256:ffe6d8abd853ed4f86717c90329fe55421857bbb8f47a35c5c46d9a775daceb5
     # via -r /tmp/requirements.txt
 mcp==1.30.0 \
     --hash=sha256:8286ccda8a7617ff8529014925306daab4f58d12dfd7abef6241aa58158d454f
