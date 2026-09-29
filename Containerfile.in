@@ -7,7 +7,7 @@
 # OGX_ARTIFACT_SOURCE selects how the files are obtained (no fallback between modes):
 #   pull  - use the modelcar image directly as a build stage (default; non-fork/local/Konflux)
 #   cache - copy from a cache staged in the build context (fork CI builds)
-ARG OGX_MODELCAR_IMAGE=registry.stage.redhat.io/rhai/modelcar-redhatai-ogx-distribution:3.0
+ARG OGX_MODELCAR_IMAGE=registry.stage.redhat.io/rhai/modelcar-redhatai-ogx-distribution:3.0-1787143047
 ARG OGX_ARTIFACT_SOURCE=pull
 
 # pull mode: the modelcar image itself. Pulling it requires the builder to be
