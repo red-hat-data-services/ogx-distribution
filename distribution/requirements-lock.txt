@@ -1232,9 +1232,9 @@ kiwisolver==1.5.0 \
     --hash=sha256:fd40bb9cd0891c4c3cb1ddf83f8bbfa15731a248fdc8162669405451e2724b09 \
     --hash=sha256:ff710414307fefa903e0d9bdf300972f892c23477829f49504e59834f4195398
     # via matplotlib
-latex2mathml==3.81.0 \
-    --hash=sha256:4b959cdc3cac8686bc0e3e5aece8127dfb1b81ca1241bed8e00ef31b82bb4022 \
-    --hash=sha256:d317710393fe20579aea39cfe8928fa2ad9b8780896e585326c75e89c1d1d1a4
+latex2mathml==3.81.1 \
+    --hash=sha256:c337668441b71c819b6733905a8058ba9a9d767bae11a0c5fdacb3aff31361bd \
+    --hash=sha256:c95add0c0fcdecad2d70567e0643050d5ea1149fb2e98a5d5792fb1c8eea2ed5
     # via docling-core
 lxml==6.1.1 \
     --hash=sha256:05a82eb6e1530a64f26225b55cbd178113bd0b5af1c2b625f25e5296742c26d2 \
