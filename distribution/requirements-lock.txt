@@ -2561,8 +2561,9 @@ pyjwt==2.13.0 \
     #   mcp
     #   msal
     #   ogx
-pylatexenc==2.10 \
-    --hash=sha256:3dd8fd84eb46dc30bee1e23eaab8d8fb5a7f507347b23e5f38ad9675c84f40d3
+pylatexenc==2.11 \
+    --hash=sha256:305a072a99ce736246049c9da05841b9d718c0f7ea8888f5f596cf15cb621053 \
+    --hash=sha256:e78e7391d6c104f1ed150e21cfaa58016cdb50aa54406a2eecb793649ffdfdd0
     # via docling-slim
 pymilvus==3.0.0 \
     --hash=sha256:57c8e7c87fbbf579f122b4df893949bc78e50bca2988527864891bd544817b05
