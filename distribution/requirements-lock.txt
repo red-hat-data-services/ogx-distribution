@@ -3409,9 +3409,9 @@ sqlalchemy==2.0.51 \
     # via
     #   -r /tmp/requirements.txt
     #   ogx
-sse-starlette==3.4.6 \
-    --hash=sha256:56217ab4c9a9f9c5db7b21e08732d3e7c2b807f45231ad23de0551a24c4a41f6 \
-    --hash=sha256:725f8a1bd6d26ae1b2c9610c0ef5065dfdd496f3988d28adcf8c4b49dc25c627
+sse-starlette==3.5.0 \
+    --hash=sha256:3e6e1070df3f0f5d9cea81496de92dbb72f6721871d99748ece67441dd8b7997 \
+    --hash=sha256:75de713aa8a9441513cc283220826da079d982770965b951e9437720e8bafdb2
     # via mcp
 starlette==1.3.1 \
     --hash=sha256:05d0213193f2fbaae60e2ecb593b4add4262ad4e46536b54abe36f11a71724e0 \
