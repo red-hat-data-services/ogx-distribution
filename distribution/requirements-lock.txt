@@ -3573,8 +3573,9 @@ torch==2.13.0+cpu \
     #   safetensors
     #   sentence-transformers
     #   torchvision
-torchao==0.17.0+cpu \
-    --hash=sha256:6c0ce8b506c72be4efb1f0c6fd1679cb58145efebb20d51ac1adf7a7b3ebb872
+torchao==0.18.0 \
+    --hash=sha256:5c2b4485341bf28b7fed2c4fc95b9f298e209f41685350f067de85527a05585e \
+    --hash=sha256:6540b148e40ba81cbd4de86392225a076a1591146e9cebb099b3b234ba9feebe
     # via -r /tmp/requirements.txt
 torchvision==0.28.0+cpu \
     --hash=sha256:1aa741ae0eb8668b6287dd667548e2dd10179c828db68bfdee1519763b9c5b99 \
