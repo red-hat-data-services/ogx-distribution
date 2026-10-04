@@ -941,9 +941,9 @@ httpx-sse==0.4.3 \
     --hash=sha256:0ac1c9fe3c0afad2e0ebb25a934a59f4c7823b60792691f779fad2c5568830fc \
     --hash=sha256:9b1ed0127459a66014aec3c56bebd93da3c1bc8bb6618c8082039a44889a755d
     # via mcp
-huggingface-hub==1.24.0 \
-    --hash=sha256:18431ff4daae0749aa9ba102fc952e314c98e1d30ebdec5319d85ca0a83e1ae5 \
-    --hash=sha256:6ed4120a84a6beec900640aa7e346bd766a6b7341e41526fef5dc8bd81fb7d59
+huggingface-hub==1.33.0 \
+    --hash=sha256:04e434b06e100eddbce9a6e817d72693a7884b10a79bd67ab48080d5c07eb899 \
+    --hash=sha256:367be21a201db9523eddf8aeac7048f2602c1b308691c97640d5e72ed188007e
     # via
     #   accelerate
     #   docling-ibm-models
