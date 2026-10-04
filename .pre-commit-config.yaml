@@ -67,4 +67,4 @@ repos:
         require_serial: true
         files: ^distribution/config\.yaml$
         additional_dependencies:
-          - pyyaml==6.0.2
+          - pyyaml==6.0.3
