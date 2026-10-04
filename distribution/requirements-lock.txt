@@ -1387,9 +1387,9 @@ mail-parser==4.4.0 \
     --hash=sha256:46f7931817660fec4f7723e6f1722e66a9cce44c2daeacbeb9e705078379561f \
     --hash=sha256:82d2c0fa98a138620feaa87a378af2a2643b2941b2e125d7abfc65dd21094b33
     # via docling-slim
-mammoth==1.11.0 \
-    --hash=sha256:a0f59e442f34d5b6447f4b0999306cbf3e67aaabfa8cb516f878fb1456744637 \
-    --hash=sha256:c077ab0d450bd7c0c6ecd529a23bf7e0fa8190c929e28998308ff4eada3f063b
+mammoth==1.13.0 \
+    --hash=sha256:b359bee7bc00caba47dacc64286928133dd947917bab852eea01d0c8d8997296 \
+    --hash=sha256:dd7629fa9d0a5e82207b3f481a9dcb8308fb43f6206258e062f11121efba9991
     # via markitdown
 markdown-it-py==4.2.0 \
     --hash=sha256:04a21681d6fbb623de53f6f364d352309d4094dd4194040a10fd51833e418d49 \
