@@ -1383,9 +1383,9 @@ magika==0.6.3 \
     --hash=sha256:e57f75674447b20cab4db928ae58ab264d7d8582b55183a0b876711c2b2787f3 \
     --hash=sha256:eda443d08006ee495e02083b32e51b98cb3696ab595a7d13900d8e2ef506ec9d
     # via markitdown
-mail-parser==4.4.0 \
-    --hash=sha256:46f7931817660fec4f7723e6f1722e66a9cce44c2daeacbeb9e705078379561f \
-    --hash=sha256:82d2c0fa98a138620feaa87a378af2a2643b2941b2e125d7abfc65dd21094b33
+mail-parser==4.8.0 \
+    --hash=sha256:119aed23c2056dd73b7d70b77e5caf1bc0cb3675ca50c1ff49b4b72296ffa9ca \
+    --hash=sha256:602e659b159652d378b0f9cce2d682bee692bedae72687786e2b2e52eaeb9afc
     # via docling-slim
 mammoth==1.11.0 \
     --hash=sha256:a0f59e442f34d5b6447f4b0999306cbf3e67aaabfa8cb516f878fb1456744637 \
