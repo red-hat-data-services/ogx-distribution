@@ -1969,9 +1969,9 @@ onnxruntime==1.30.0 \
     --hash=sha256:fa688e7891a6aa206636fe7372e27ee75fd17713289f6b4fc7b190e0a7de9328 \
     --hash=sha256:fd54b314ea385bcecac69ab431f020ba503e3878dad4ebb645fec5a24b041242
     # via magika
-openai==3.22.1 \
-    --hash=sha256:2575f961e4c1df8761f8eeb4d78e967de3f9b9f91b22f7120d60e393e970094d \
-    --hash=sha256:43ff3de5457a8beb4afa177d4e0ba6841cfadd5219ebc62297fde6c8a9d401a6
+openai==3.26.0 \
+    --hash=sha256:050597ff71ff4025177405a41fa4019d4f9feae5826645b63b8e35b6e9a3c88b \
+    --hash=sha256:73b470c09cf2171dce930e36af01c6632241adda0120ad84302ad229f9130a5a
     # via
     #   ogx
     #   ogx-api
