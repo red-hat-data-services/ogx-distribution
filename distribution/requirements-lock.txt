@@ -575,9 +575,9 @@ docling==2.115.0 \
     --hash=sha256:1a3d9bdf2f82610e97085a1a1b53cf259d1bd7aff97651ff2decc3b2b105123c \
     --hash=sha256:99f6fb72293f3270f42514711808a766d4d7305152278171532fd59eb6bf55a3
     # via -r /tmp/requirements.txt
-docling-core==2.87.1 \
-    --hash=sha256:1cd1748470523322b6314b72c79e8d1c638489fa903b8a1901cae023b14a4f84 \
-    --hash=sha256:a2c19e63519e49f993d93103481934b772db701c80c683900476f898dfac841a
+docling-core==2.100.0 \
+    --hash=sha256:4cb57c4ccb5740e83e5e63d2215201711125e3603115bc720b099bcc49d09029 \
+    --hash=sha256:87a4f7318d774194364a3ac6c1e6b1df0517f28c7ac395d92aa3535eb3e5c446
     # via
     #   docling-ibm-models
     #   docling-parse
