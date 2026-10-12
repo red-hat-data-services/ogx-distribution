@@ -758,9 +758,9 @@ faker==40.40.0 \
     --hash=sha256:803ee7f920679e7367c3f7b7f97752f5a9780aa5566c71723fbe57d591beafe1 \
     --hash=sha256:cd45ebdd1363f92a45740ac49945e49fa18f7e10771884a83c796a235550d7b7
     # via polyfactory
-fastapi==0.142.2 \
-    --hash=sha256:06366626f2e70576367714d9ab2fe8472e6c8456dba69b399f9f797ab5e92570 \
-    --hash=sha256:bd5f4d81f1e93a88bcd77caf4dfe3c2dbffc3805407a0007e9a114c18b3a670b
+fastapi==0.143.0 \
+    --hash=sha256:1acffe48206a80917cf7dac21992b5c44b25384e8902bf745c1fd9dabcf6c51f \
+    --hash=sha256:3e9395fd35276425b61b516a31fdd7c77fe2af83e41b4da22e30696fb1304c5d
     # via
     #   -r /tmp/requirements.txt
     #   ogx
