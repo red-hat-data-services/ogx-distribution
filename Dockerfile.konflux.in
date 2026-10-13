@@ -29,9 +29,14 @@ LABEL com.redhat.component="ogx-cpu-rhel9-container" \
 COPY distribution/requirements-lock-konflux.txt ${APP_ROOT}/requirements-lock-konflux.txt
 
 RUN source /cachi2/cachi2.env \
+&& LOCK_FILE=${APP_ROOT}/requirements-lock-konflux.txt \
+    && if [ "$(uname -m)" = "s390x" ]; then \
+         awk '/^triton==/{skip=1; next} skip && /^[^ #]/{skip=0} !skip' "${LOCK_FILE}" \
+           > /tmp/requirements-lock-konflux.txt \
+         && LOCK_FILE=/tmp/requirements-lock-konflux.txt; \
+       fi \
     && uv pip install --no-index --find-links "${PIP_FIND_LINKS}" \
-       -r ${APP_ROOT}/requirements-lock-konflux.txt
-
+       -r "${LOCK_FILE}"
 USER 0
 # install missing RPMs (online, requires subscription)
 # RUN ${APP_ROOT}/lib/tools/fromager-rpm-check.py --check-dnf -y --dnf-clean
