@@ -9,8 +9,16 @@
 # OGX_ARTIFACT_SOURCE selects how the files are obtained (no fallback between modes):
 #   pull  - use the modelcar image directly as a build stage (default; non-fork/local/Konflux)
 #   cache - copy from a cache staged in the build context (fork CI builds)
+#
+# s390x (IBM Z) builds are inference-only (remote vLLM): the inline providers
+# whose dependencies have no s390x wheels (docling, faiss, milvus,
+# sentence-transformers, ...) are not installed and no model/data artifacts are
+# bundled. All s390x-specific behavior is keyed on TARGETARCH / `uname -m`;
+# amd64 and arm64 builds are unchanged.
 ARG OGX_MODELCAR_IMAGE=registry.stage.redhat.io/rhai/modelcar-redhatai-ogx-distribution:3.0
 ARG OGX_ARTIFACT_SOURCE=pull
+# Set automatically by podman/buildah/buildx from the build platform.
+ARG TARGETARCH
 
 # pull mode: the modelcar image itself. Pulling it requires the builder to be
 # logged in to the stage registry (username agentic-api); the build fails if the
@@ -25,22 +33,61 @@ FROM scratch AS modelcar-cache
 COPY distribution/artifact-cache/models /models
 
 # Select the source stage; both expose the model/data files at /models.
-FROM modelcar-${OGX_ARTIFACT_SOURCE} AS modelcar
+FROM modelcar-${OGX_ARTIFACT_SOURCE} AS modelcar-amd64
+FROM modelcar-${OGX_ARTIFACT_SOURCE} AS modelcar-arm64
+# s390x: no model/data artifacts (only needed by inline providers not built for
+# s390x), so use the empty build-context cache stage.
+FROM modelcar-cache AS modelcar-s390x
 
-FROM quay.io/opendatahub/odh-midstream-python-base-3-12:latest
+FROM modelcar-${TARGETARCH} AS modelcar
+
+# Base image per architecture. The ODH midstream base is only published for
+# amd64/arm64; s390x uses the UBI Python 3.12 image it is built on.
+FROM quay.io/opendatahub/odh-midstream-python-base-3-12:latest AS base-amd64
+FROM quay.io/opendatahub/odh-midstream-python-base-3-12:latest AS base-arm64
+FROM registry.access.redhat.com/ubi9/python-312:latest AS base-s390x
+
+FROM base-${TARGETARCH}
 
 # Re-declared for use in the RUN below (global ARGs are not inherited by stages).
 ARG OGX_ARTIFACT_SOURCE
 
 COPY distribution/requirements-lock.txt ${APP_ROOT}/requirements-lock.txt
+
+# s390x only: install just `ogx` (pinned to the lock file's commit) plus the
+# runtime packages needed for remote vLLM inference with SQLite storage, instead
+# of the full lock file (torch, faiss, pymilvus, docling, ... have no s390x
+# wheels). Some remaining dependencies (e.g. tiktoken) have no s390x wheel on
+# PyPI either, so a toolchain is installed to build them and removed afterwards.
+# Runs as root for dnf; ownership is handed back to uid 1001 / group 0 (OpenShift).
+# grpcio has no s390x wheel and its bundled BoringSSL does not support s390x,
+# so build it against the system OpenSSL/zlib.
+USER root
+RUN if [ "$(uname -m)" = "s390x" ]; then \
+      dnf install -y git zlib-devel gcc-c++ make rust cargo python3.12-devel openssl-devel libffi-devel postgresql-devel \
+      && pip install --no-cache-dir uv \
+      && grep -E '^ogx(-api)? @ ' ${APP_ROOT}/requirements-lock.txt > /tmp/ogx-requirements.txt \
+      && GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1 GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1 uv pip install --no-cache --python ${APP_ROOT}/bin/python -r /tmp/ogx-requirements.txt \
+           aiosqlite fastapi httpx sqlalchemy 'sqlalchemy[asyncio]' uvicorn \
+      && rm -f /tmp/ogx-requirements.txt \
+      && dnf remove -y gcc-c++ make rust cargo python3.12-devel postgresql-devel \
+      && dnf clean all \
+      && chown -R 1001:0 ${APP_ROOT} \
+      && chmod -R g=u ${APP_ROOT}; \
+    fi
+USER 1001
+
 # Package docling transitively pulls in opencv-python via rapidocr.
 # opencv-python requires libGL.so.1 (absent in UBI). Swap it for the headless
 # variant after install, pinned to the exact version the resolver chose.
-RUN uv pip sync --verify-hashes ${APP_ROOT}/requirements-lock.txt \
-    && OPENCV_VERSION=$(uv pip show opencv-python 2>/dev/null | awk '/^Version:/{print $2}') \
-    && [ -n "${OPENCV_VERSION}" ] || { echo "ERROR: opencv-python not found after install"; exit 1; } \
-    && uv pip uninstall opencv-python \
-    && uv pip install "opencv-python-headless==${OPENCV_VERSION}"
+# (Skipped on s390x, which installs its own minimal dependency set above.)
+RUN if [ "$(uname -m)" != "s390x" ]; then \
+      uv pip sync --verify-hashes ${APP_ROOT}/requirements-lock.txt \
+      && OPENCV_VERSION=$(uv pip show opencv-python 2>/dev/null | awk '/^Version:/{print $2}') \
+      && [ -n "${OPENCV_VERSION}" ] || { echo "ERROR: opencv-python not found after install"; exit 1; } \
+      && uv pip uninstall opencv-python \
+      && uv pip install "opencv-python-headless==${OPENCV_VERSION}"; \
+    fi
 
 # Model/data artifacts from the selected modelcar stage. Files are stored
 # .cache-relative under /models, so their contents land under ${APP_ROOT}/.cache
@@ -50,10 +97,12 @@ COPY --chown=1001:0 --from=modelcar /models ${APP_ROOT}/.cache
 # Drop the modelcar's docs and the cache-mode placeholder, then verify the
 # expected model trees are present (hard-fails a cold/empty fork cache).
 RUN rm -f ${APP_ROOT}/.cache/README.md ${APP_ROOT}/.cache/modelcard.md ${APP_ROOT}/.cache/.gitkeep \
-    && for d in docling huggingface tiktoken; do \
-         { [ -d "${APP_ROOT}/.cache/${d}" ] && [ -n "$(ls -A "${APP_ROOT}/.cache/${d}")" ]; } \
-           || { echo "ERROR: model/data cache missing or empty: .cache/${d} (OGX_ARTIFACT_SOURCE=${OGX_ARTIFACT_SOURCE})" >&2; exit 1; }; \
-       done
+    && if [ "$(uname -m)" != "s390x" ]; then \
+         for d in docling huggingface tiktoken; do \
+           { [ -d "${APP_ROOT}/.cache/${d}" ] && [ -n "$(ls -A "${APP_ROOT}/.cache/${d}")" ]; } \
+             || { echo "ERROR: model/data cache missing or empty: .cache/${d} (OGX_ARTIFACT_SOURCE=${OGX_ARTIFACT_SOURCE})" >&2; exit 1; }; \
+         done; \
+       fi
 ENV DOCLING_ARTIFACTS_PATH="${APP_ROOT}/.cache/docling/models"
 ENV HF_HOME="${APP_ROOT}/.cache/huggingface"
 ENV TIKTOKEN_CACHE_DIR="${APP_ROOT}/.cache/tiktoken"

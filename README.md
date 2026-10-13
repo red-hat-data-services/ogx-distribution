@@ -146,3 +146,14 @@ Preview the message format without sending:
 IMAGE_NAME=quay.io/opendatahub/odh-ogx-core IMAGE_TAG=abc123 COMMIT_SHA=abc1234567890 \
   WORKFLOW_URL=https://github.com/... .github/actions/notify-slack/notify.sh --preview
 ```
+## IBM Z (s390x)
+The `Containerfile` also builds natively on s390x (`podman build --platform linux/s390x -f Containerfile .`).
+The s390x image is inference-only (remote vLLM): inline providers whose dependencies have no s390x
+wheels (docling, faiss, milvus, sentence-transformers, ...) are not installed and no model/data
+artifacts are bundled. amd64 and arm64 builds are unchanged.
+When deploying with the OGX operator, `disabledAPIs` only removes APIs from the `apis` list, so use a
+minimal base config to keep the other providers out of the server. Create a ConfigMap labeled
+`ogx.io/watch: "true"` and reference it from the `OGXServer` with `spec.baseConfig`
+(`apis: [inference, messages]`, a `messages` provider of type `inline::builtin`, and
+`server.port: 8321`), then configure the remote vLLM provider, model and SQLite storage on the
+`OGXServer`.
