@@ -253,10 +253,14 @@ h11==0.16.0 \
 h2==4.3.0 \
     --hash=sha256:7d7347dadeb150dbe161212b52d123213876100aff9e3a45f1cf9c6b3e1cff1d
     # via httpx
-hf-xet==1.6.0 \
-    --hash=sha256:0e1a1f918af5514213e4b781c029cd7fe85c596289c2a9e3351c7bc791796c08 \
-    --hash=sha256:318dc49e0b0143fd537f9ab8188513e654303eff72f2d5376c5326d2c3872e43
-    # via huggingface-hub
+hf-xet==1.5.2 \
+    --hash=sha256:0b7172fa11d8bcaf9b5c6233b74ea2afead2ac2f06daf6dc6fc9997d6f7811d2 \
+    --hash=sha256:547bf863d0d837702295719ddc13cf1f5f8a7e30c1921d937ce5696148c546ad \
+    --hash=sha256:7a31f51b7d81506ad4c7b8b915fc83d241c10292c56987d322274ef3a7fa0abb \
+    --hash=sha256:87162129170863c936dfc8abb220797e5d418e3a9bba83d53a2eb3fd02a415d3
+    # via
+    #   -c distribution/constraints.txt
+    #   huggingface-hub
 hpack==4.2.0 \
     --hash=sha256:4c5579bfc76e3cfe8bb7f6ac69212b916115c4877d7a2ee2ac5a178cf05c75f7
     # via h2
@@ -283,8 +287,8 @@ httpx-sse==0.4.3 \
 httpx2==2.13.1 \
     --hash=sha256:603dfe84865b0a9340282e5621c759660fd0acfada6b3cc260c7772f696a6854
     # via openai
-huggingface-hub==1.33.0 \
-    --hash=sha256:d6780420c63c5de6b21cdd15f78a232ff8b6bacfa48b962ff60d1164699995ad
+huggingface-hub==1.32.0 \
+    --hash=sha256:efa63633d7234e7df67ac5d3dbd36f61672e09cf476322340ecb78fbe5f0c40e
     # via
     #   accelerate
     #   docling-ibm-models
