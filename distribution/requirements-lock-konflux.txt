@@ -793,12 +793,14 @@ psutil==7.2.2 \
     # via
     #   accelerate
     #   opentelemetry-instrumentation-system-metrics
-pyarrow==25.0.1 \
-    --hash=sha256:1138b9e03645e284e7984fa615cd9273199ede660408ff23f5aacd3168cec8ec \
-    --hash=sha256:6a6d894bf8e7ab415ed6553be58dd96eb7170cb4d1493973a449793dc6a70f0f \
-    --hash=sha256:da9944a46cfc8058e4a69335a0e6357c02fc16e803602760f337f05bacc37e09 \
-    --hash=sha256:e514679aa81e6552aa78e599a78fa576101e51d3c24203d14772ee08f70c1336
-    # via milvus-lite
+pyarrow==25.0.0 \
+    --hash=sha256:4f0260a86a95607e6f1941fd15b352b56be6743c272ba9e2a7ae65d3e63f0f22 \
+    --hash=sha256:b7cc7bfc4f74e1b44f9699468c26df0925f75cbef99346ac35efac8c13cb71b5 \
+    --hash=sha256:dc55a12747b836dfd27b2055e343c6b00d9f726dec25ad097bbe536140b9bc1f \
+    --hash=sha256:dd44b035b1fb5305894e7aee13247fb49d3eccd691430cbe1f3ca98b9d3c5377
+    # via
+    #   -c distribution/constraints.txt
+    #   milvus-lite
 pyasn1==0.6.4 \
     --hash=sha256:aa4baf3e3b2b894b21127fc4769773650d15543dec5a3756daaa19c0f3763b7f
     # via pyasn1-modules
