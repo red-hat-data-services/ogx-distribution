@@ -735,9 +735,9 @@ fsspec==2026.6.0 \
     # via
     #   huggingface-hub
     #   torch
-google-auth==2.56.2 \
-    --hash=sha256:c8270ea95b2697b74e3d8438ae9c5b898e38b623b915c7b5c5635921e7de68a6 \
-    --hash=sha256:e28f103ca8091fb7012b99c44243d7366c29863713b8e34a220c3322b7a07051
+google-auth==2.62.0 \
+    --hash=sha256:0bef0ce54bdf9ce226c5d66e4264413bd918141c31bbe49fb52eac882f513d69 \
+    --hash=sha256:4ff4319aeb4ad128409759d397a9fcafad126d0031d241cc0dd6b9a00b43e3f3
     # via google-genai
 google-genai==1.75.0 \
     --hash=sha256:56bac3991b311c93f980c0a2abcd287b672146905df1fbd71c92ed633d5a07cf \
