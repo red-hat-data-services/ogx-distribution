@@ -1780,9 +1780,9 @@ mdurl==0.1.2 \
     --hash=sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8 \
     --hash=sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba
     # via markdown-it-py
-milvus-lite==3.2.1 \
-    --hash=sha256:0742fb4c54858bcc6fc3c2142ec651e2b0f4ae30f19e21d4fbc6db65b9e16c7b \
-    --hash=sha256:4d988fe0a6bbdfc708046014ad69f4b140c43567ecafd8b6df300ad7d37210f3
+milvus-lite==3.2.2 \
+    --hash=sha256:106e2437054713afa31208cd081f1e2682253213949a5f544d983dfce1b3a16d \
+    --hash=sha256:c171dd372071d06425b478975562c5a1c13178333a74883eb04e8a8e6fca1d28
     # via
     #   -c distribution/constraints.txt
     #   pymilvus
