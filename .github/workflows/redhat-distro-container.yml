@@ -35,7 +35,7 @@ on:
         required: true
         type: string
 
-  # do a nightly test of the `main` branch of ogx at 6AM UTC every morning
+  # do a nightly test of the `release-1.4.x` branch of ogx at 6AM UTC every morning
   schedule:
     - cron: '0 6 * * *'
 
@@ -87,7 +87,7 @@ jobs:
       EMBEDDING_MODEL: vllm-embedding/ibm-granite/granite-embedding-125m-english
       VLLM_URL: http://localhost:8000/v1
       VLLM_EMBEDDING_URL: http://localhost:8001/v1
-      OGX_COMMIT_SHA: ${{ github.event.inputs.ogx_commit_sha || 'main' }}
+      OGX_COMMIT_SHA: ${{ github.event.inputs.ogx_commit_sha || 'release-1.4.x' }}
       # Fork/Dependabot PRs can't reach the stage registry, so they build from
       # the cache (populated by non-fork runs); everyone else pulls the modelcar.
       IS_FORK: ${{ github.event_name == 'pull_request' && (github.event.pull_request.head.repo.fork || github.secret_source == 'Dependabot') }}
@@ -151,7 +151,7 @@ jobs:
 
       - name: Build image for testing (${{ matrix.arch }})
         id: build
-        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: .
           file: Containerfile
@@ -435,7 +435,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && needs.build-test.outputs.distribution-changed == 'true')
     runs-on: ubuntu-latest
     env:
-      OGX_COMMIT_SHA: ${{ github.event.inputs.ogx_commit_sha || 'main' }}
+      OGX_COMMIT_SHA: ${{ github.event.inputs.ogx_commit_sha || 'release-1.4.x' }}
     permissions:
       contents: read
       id-token: write # for cosign keyless signing
@@ -491,7 +491,7 @@ jobs:
 
       - name: Publish multi-arch image to Quay.io
         id: push
-        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: .
           file: Containerfile
