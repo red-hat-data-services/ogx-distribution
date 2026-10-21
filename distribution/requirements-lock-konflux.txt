@@ -1103,11 +1103,13 @@ sniffio==1.3.1 \
 soupsieve==3.0.3 \
     --hash=sha256:095e023248bfb4bd7896cd2638f2a1f6d7a1dde573801a31a7b9bb1f40eb010f
     # via beautifulsoup4
-sqlalchemy==2.1.5 \
-    --hash=sha256:4a28924bdc41bc57dd1b24a0008a237c92f6f5ec22118bf62256826a48f3fe3a \
-    --hash=sha256:56a81481ed05256120e1dfb42e26c706ede3e754c3d01489507fb803cd8f90e9 \
-    --hash=sha256:616b66494ecc90028e46121ea5ac60e536c7b36763ae09ecfe5fb4b46a6baa5a
+sqlalchemy==2.1.4 \
+    --hash=sha256:665648cb1fcb0ac3a50c7d4b3a02f05b88cb53bcd19221cc5317b0c290ee3ac9 \
+    --hash=sha256:8a2b1c36c5aca800441fec3f37677b5cca43130c1578bbf0d7850a20d1944fb1 \
+    --hash=sha256:c41cea031e8a24d1e8e16a593cce44b7b456e60cb62fe452a0ce62c6640e2fd3 \
+    --hash=sha256:ceaecc0e45b958dba92fe0e481dcea0fd4449d6291d7b95e02b8f0fcf2d3ecc8
     # via
+    #   -c distribution/constraints.txt
     #   -r /tmp/requirements.txt
     #   ogx
 sse-starlette==3.5.0 \
