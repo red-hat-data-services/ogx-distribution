@@ -916,10 +916,14 @@ pymilvus==3.0.2 \
     # via
     #   -c distribution/constraints.txt
     #   -r /tmp/requirements.txt
-pymongo==4.19.0 \
-    --hash=sha256:9018828ef92d56d9d8ba2d3cd3a712e0d6a3a1ec9d94bfc17647675e051c4dc8 \
-    --hash=sha256:cb436330f41636be8a3a9338ddfa0324478790aa89df77213445d3528e3e301c
-    # via -r /tmp/requirements.txt
+pymongo==4.18.3 \
+    --hash=sha256:7603c1af1db9dc061b9c79a7648b8d9d17958c54beae9226c025216c83fbe334 \
+    --hash=sha256:7faebe5ad190f6ffe996a05472aeb87b11f06809c7fb2dec66aa886bfb584488 \
+    --hash=sha256:e6685a466f1ceca6d2d97cd75c4f86c5bb85e79fed4132c10ed465b37cce0e8e \
+    --hash=sha256:ed2113435c40d8e58d4d6303d07386a40c27acc2dc3058259630aebf84f12e03
+    # via
+    #   -c distribution/constraints.txt
+    #   -r /tmp/requirements.txt
 pyparsing==3.3.3 \
     --hash=sha256:70365e89f425163f1ab11f6f1dff6e17c4fcaa3820f35bbc9bf3c6ca7ab04eb6
     # via matplotlib

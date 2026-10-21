@@ -8,3 +8,6 @@ pymilvus!=2.6.10
 
 # docling-parse 7.22.3 currently has no ppc64 wheel published in the RHAI index
 docling-parse==7.22.2
+
+# pymongo 4.19.0 currently has no ppc64 wheel published in the RHAI index
+pymongo==4.18.3
