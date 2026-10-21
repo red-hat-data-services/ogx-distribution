@@ -1313,11 +1313,13 @@ websockets==16.1.1 \
     #   docling-slim
     #   google-genai
     #   ogx
-wrapt==2.5.1 \
-    --hash=sha256:2067ba12611230eea58faf5cde00b93e2059aa161ee046865baab6e59986f45f \
-    --hash=sha256:65ad5b5c9b4192cabe6de482eab1fb24851eb796c36d09f4f15d960e0bcf968e \
-    --hash=sha256:eed2f6b52f900e72ceb22ecaf4f3134b377e74e6d629073d49b03b81ca5655be
+wrapt==2.5.0 \
+    --hash=sha256:60640a99ecb1bb53f9e8d85e227951c4531b6d523b19dc910b29c0b050dc944b \
+    --hash=sha256:9e8a6dca2281d1af8a0cb7dfb0c3b22e93c489ad5c33c3ee8c6c38eee4a0ce79 \
+    --hash=sha256:aee596d4a8ca0a133e334568bdc486fde2297892ea3ee10877e71322bbc0f152 \
+    --hash=sha256:b87130c583c2f488c6ab8cdc2e15a2c0a7f27d41bca015088d56392d0e935955
     # via
+    #   -c distribution/constraints.txt
     #   opentelemetry-instrumentation
     #   opentelemetry-instrumentation-asyncio
     #   opentelemetry-instrumentation-boto3sqs
