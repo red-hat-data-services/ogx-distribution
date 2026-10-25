@@ -3628,9 +3628,9 @@ semchunk==3.2.5 \
     --hash=sha256:ee15e9a06a69a411937dd8fcf0a25d7ef389c5195863140436872a02c95b0218 \
     --hash=sha256:fd09cc5f380bd010b8ca773bd81893f7eaf11d37dd8362a83d46cedaf5dae076
     # via docling-core
-sentence-transformers==6.1.0 \
-    --hash=sha256:299025df51550dc1a38f05be27a9b0bf881c4e5e70542b3b7757d05e00aa3868 \
-    --hash=sha256:eb8122f4d180f552eda26dc3d77e84e8c11dc2b1d456a406b9f24abb70ceeadd
+sentence-transformers==6.2.0 \
+    --hash=sha256:1e3cd8796ab7bcad4cfa2f51e2083d8b37b15d6b68e6fa6b91a147c67380574d \
+    --hash=sha256:ffb51ccfef65427cfa61776d0eeeb257600b0099cf0c7533ae9a6856d31e4665
     # via -r /tmp/requirements.txt
 sentencepiece==0.2.2 \
     --hash=sha256:046b15ea22d8042e2e173561d464ec3b64a9c2081324df70ebce7bf7ebb3e497 \
