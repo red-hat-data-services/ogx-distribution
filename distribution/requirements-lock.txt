@@ -1399,9 +1399,9 @@ markdownify==1.2.3 \
     --hash=sha256:1a176f05522c8a2cb1dd3ab9d307dcdadbed5c26ae717855bfc42b3b6d38d937 \
     --hash=sha256:a189a0bedfd14009030fde5f85bb6f77c56897cb839b5c25315dd7d4e3e290ba
     # via markitdown
-markitdown==0.1.5 \
-    --hash=sha256:4c956ff1528bf15e1814542035ec96e989206d19d311bb799f4df973ecafc31a \
-    --hash=sha256:5180a9a841e20fc01c2c09dbc5d039638429bbebcdc2af1b2615c3c427840434
+markitdown==0.1.9 \
+    --hash=sha256:52f59c48bea9cf887224c56247f648d68beb7aa7af5a12d414748210c83c20ea \
+    --hash=sha256:8f692236fc104b9251e1b86bdea969c6a1617174fe37eebb78ac6fa62a2894f0
     # via -r /tmp/requirements.txt
 marko==2.2.3 \
     --hash=sha256:8e1d7a0387281e59dfbc52a381b58c570156970e36b2bbe047f8a3a2f368cacc \
