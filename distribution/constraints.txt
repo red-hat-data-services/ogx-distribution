@@ -17,3 +17,9 @@ sqlalchemy==2.1.4
 
 # wrapt 2.5.1 currently has no ppc64 wheel published in the RHAI index
 wrapt==2.5.0
+
+# pandas 3.1.0 is broken for ppc and s390x
+pandas==3.0.6
+
+# opentelemetry-util-genai==1.2b0 is broken: https://github.com/open-telemetry/opentelemetry-python-genai/issues/997
+opentelemetry-util-genai==1.1b0
