@@ -12,3 +12,5 @@ pyarrow==25.0.0
 hf-xet==1.5.2
 # CVE-2026-114605: dns.name.from_wire_parser() excessive CPU use
 dnspython>=2.9.0
+# CVE-2026-112940: filelock ReadWriteLock symlink race condition
+filelock>=4.2.1

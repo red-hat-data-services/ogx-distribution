@@ -60,11 +60,11 @@ beautifulsoup4==4.15.0 \
     #   docling-slim
     #   markdownify
     #   markitdown
-boto3==1.43.50 \
-    --hash=sha256:00c080260af44da1faaed39ed97e3d37762e9414426eed89cc9137e7e8ae96a9
+boto3==1.43.122 \
+    --hash=sha256:6b7c23b6239f25cb36763567eccbe5d764ce9492da8abc3fea70b2a86401349a
     # via -r /tmp/requirements.txt
-botocore==1.43.50 \
-    --hash=sha256:a202e00c75172a292d6cd3f5d217b7c27333c496ef854ead607ea6b3d7b6bb2d
+botocore==1.43.122 \
+    --hash=sha256:c93126155826c2942b1ba2a482423cc70e79a987ad9607a1bf2d9a5348e83759
     # via
     #   boto3
     #   s3transfer
@@ -136,7 +136,9 @@ distro==1.9.0 \
     # via google-genai
 dnspython==2.9.0 \
     --hash=sha256:6ab823c92af08a1b8da9b2e8f78a5b933d92687453beb8d3c5990adf4a254f5f
-    # via pymongo
+    # via
+    #   -c distribution/constraints.txt
+    #   pymongo
 doclang==0.7.3 \
     --hash=sha256:bc582ed9586add81f33195eb90b8431ca3a7fa42bc571c620cea483e8c9ca856
     # via docling-core
@@ -196,6 +198,7 @@ fastapi==0.139.2 \
 filelock==4.2.4 \
     --hash=sha256:3cddca5b5ab48b12258abe2ee146cb6c7bb36ccb2817ed369d358cf7088fe892
     # via
+    #   -c distribution/constraints.txt
     #   huggingface-hub
     #   torch
 filetype==1.2.0 \
@@ -478,8 +481,8 @@ onnxruntime==1.25.0 \
     --hash=sha256:97e9b447874d91ea5398fb747cfe7500106a3cfdf0535102098211369096f7a9 \
     --hash=sha256:e3be21428998cad4ed823f06f2f0bc5e4cb3da9e56389e98002eacfd71b202ee
     # via magika
-openai==3.37.0 \
-    --hash=sha256:a7d349c815f6d7f18557abe5fcc9dc9b8f4848675280e20c20f5e215564646cb
+openai==3.40.0 \
+    --hash=sha256:002883890276f12ff862beeb8e6c146da5cc3af422482bf3716e727840f0e7e9
     # via
     #   ogx
     #   ogx-api
