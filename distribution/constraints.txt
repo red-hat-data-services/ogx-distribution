@@ -10,3 +10,5 @@ pymilvus!=2.6.10
 pyarrow==25.0.0
 # The RHAI index does not contain PPC wheel builds for hf-xet==1.6.0
 hf-xet==1.5.2
+# CVE-2026-114605: dns.name.from_wire_parser() excessive CPU use
+dnspython>=2.9.0
