@@ -5,3 +5,6 @@
 milvus-lite>=3.0.0
 # 2.6.10 crashes Milvus Lite gRPC init with empty dns:/// target
 pymilvus!=2.6.10
+
+# docling-parse 7.22.3 currently has no ppc64 wheel published in the RHAI index
+docling-parse==7.22.2

@@ -168,11 +168,14 @@ docling-core==2.101.1 \
 docling-ibm-models==4.0.3 \
     --hash=sha256:a1838f437fa29dc231cea4c7c094fac66296220eaba4dff660fd9534aa702c29
     # via docling-slim
-docling-parse==7.22.3 \
-    --hash=sha256:588a31744abd99caa8ed184066e039de65f677282b556fd537ce6c04df139828 \
-    --hash=sha256:d2b1df5ea82d35e5b5b62e8ce4936b6c5e3183933f62f9ad6dc551159386f64e \
-    --hash=sha256:f41503dc879a75a5048266cdb49a49743a1c47bfca5e0f4aa67974fb781bf0db
-    # via docling-slim
+docling-parse==7.22.2 \
+    --hash=sha256:a7409b517f758389297770a70ea5248eb3cf93e8bc41ecd5df2fb3554f19d84c \
+    --hash=sha256:ce2fb8342ad83bbe8b5d2cd94de9b6c7e763fbe6634fb435d868faad2998ef69 \
+    --hash=sha256:e3816ca1050ce822681683ef38f4a84748f3e7c726d49f2e9cfd0fcee650e34a \
+    --hash=sha256:f5691fc0edcd25581a8a918922d401ecf0c09cf49a8dac07a49540fb8d299b7f
+    # via
+    #   -c distribution/constraints.txt
+    #   docling-slim
 docling-slim==2.140.0 \
     --hash=sha256:4c317398b3e5d4d98d8c01f5567c3b237481583e0af24d30b0f40bedb5322fec
     # via
