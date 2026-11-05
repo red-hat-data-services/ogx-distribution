@@ -32,6 +32,9 @@ RUN source /cachi2/cachi2.env \
     && uv pip install --no-index --find-links "${PIP_FIND_LINKS}" \
        -r ${APP_ROOT}/requirements-lock-konflux.txt
 
+# remove uv to please FIPS gods
+RUN pip uninstall -y uv
+
 USER 0
 # install missing RPMs (online, requires subscription)
 # RUN ${APP_ROOT}/lib/tools/fromager-rpm-check.py --check-dnf -y --dnf-clean
