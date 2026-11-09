@@ -145,9 +145,9 @@ botocore==1.43.55 \
     # via
     #   boto3
     #   s3transfer
-cachetools==7.1.6 \
-    --hash=sha256:2c12e255780330af28b91bb7fb96cce4c766f04e38396b9a24510190a5827096 \
-    --hash=sha256:c7a79e7f30ba9943c1cefd08cc36f006aaae086e017af9166f1d59d6170c47e1
+cachetools==7.3.0 \
+    --hash=sha256:2105787c94619bde7072624fec0fe7b8a08bb7bf6c757c318f8925573c6f07c9 \
+    --hash=sha256:3f63fc208410f0c3a3b37883c4903ecdacd6f0b259134e6d2e82debd5b2e01de
     # via pymilvus
 certifi==2026.7.22 \
     --hash=sha256:62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775 \
