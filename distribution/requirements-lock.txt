@@ -1642,9 +1642,9 @@ markitdown==0.1.8 \
     --hash=sha256:17188ad827ea79fc264c7b1ca8cf5a242a16278d84cc32f2edc475dbe92812ed \
     --hash=sha256:de7375a50578a39bcbbf13b48c67d99033d988e0ae8ad25af46ed432dbe4cbab
     # via -r /tmp/requirements.txt
-marko==2.2.4 \
-    --hash=sha256:c042c66f835425673123d7536b39b4660de3b68e30078c70fd26245b31170683 \
-    --hash=sha256:d80510506edba096ec49d4720a09645fa0bb78e7b7b88697f20032fc19730aa9
+marko==2.2.5 \
+    --hash=sha256:26380a6b037b5b49cec3847ee3585ba66f6782a4b9aec0d1216b7194ec5871ee \
+    --hash=sha256:3a5bac3a2e3ccb53cd97dcd29e422c4f701c29ec7c61be4c0d827321ef057553
     # via docling-slim
 markupsafe==3.0.4 \
     --hash=sha256:007e1ffd9bf65bb6ee96df7b258fc632a4868dd5566037986c64781f35a36e98 \
