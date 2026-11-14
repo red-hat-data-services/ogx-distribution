@@ -5,3 +5,6 @@
 milvus-lite>=3.0.0
 # 2.6.10 crashes Milvus Lite gRPC init with empty dns:/// target
 pymilvus!=2.6.10
+
+# pandas 3.1.0 is broken on ppc
+pandas!=3.1.0
