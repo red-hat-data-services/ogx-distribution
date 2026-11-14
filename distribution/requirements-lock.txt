@@ -2564,8 +2564,9 @@ pyjwt==2.13.0 \
 pylatexenc==2.10 \
     --hash=sha256:3dd8fd84eb46dc30bee1e23eaab8d8fb5a7f507347b23e5f38ad9675c84f40d3
     # via docling-slim
-pymilvus==3.0.0 \
-    --hash=sha256:57c8e7c87fbbf579f122b4df893949bc78e50bca2988527864891bd544817b05
+pymilvus==3.0.3 \
+    --hash=sha256:b487f0150be8af86e3caea53148d7ea9466650d99820a7b6e588d36de1387e42 \
+    --hash=sha256:d439c039861e753841a0809825602cfb4f146d593f4479d83a3402b738e5968f
     # via
     #   -c distribution/constraints.txt
     #   -r /tmp/requirements.txt
