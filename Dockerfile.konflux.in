@@ -24,6 +24,7 @@ RUN source /cachi2/cachi2.env \
        -r ${APP_ROOT}/requirements-lock-konflux.txt
 
 USER 0
+RUN rm -f /opt/app-root/bin/uv /opt/app-root/bin/uvx
 # install missing RPMs (online, requires subscription)
 # RUN ${APP_ROOT}/lib/tools/fromager-rpm-check.py --check-dnf -y --dnf-clean
 # TODO: check if public-repos.sh is still needed

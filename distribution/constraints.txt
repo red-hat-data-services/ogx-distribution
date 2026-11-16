@@ -10,3 +10,5 @@ pymilvus!=2.6.10
 pyarrow==25.0.0
 # The RHAI index does not contain PPC wheel builds for hf-xet==1.6.0
 hf-xet==1.5.2
+# botocore 1.43.122 removes the eMudhra CA roots (CVE-2026-114406; RHAI-49092).
+botocore==1.43.122
