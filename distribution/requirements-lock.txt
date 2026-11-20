@@ -746,9 +746,9 @@ docling-parse==7.25.0 \
     --hash=sha256:f8fe30b2ca621e578db91341858bd7fc7c084e145451ee6f485710cc6c8c44ae \
     --hash=sha256:fb5977a73bcd6c59938c69904b588287021e0b782300624118e8fc4ea2cd8f85
     # via docling-slim
-docling-slim==2.150.0 \
-    --hash=sha256:09467855e2d15082d273b58cad84432d2a0202aff27ace2fa625b28843ba4b8a \
-    --hash=sha256:bf152723ea98318933e1e07dd01a15aaabdb1a4cfb5627557c839c18ddeed869
+docling-slim==2.150.1 \
+    --hash=sha256:30d50598957e3f83337b82a9f4fd76c6f72c409dbf03f6fca4afc7a331117e4f \
+    --hash=sha256:e62f17bb546208d3f6794c09bdae61a96ef698a5bbc05696f7fbfdbb02a0fa3a
     # via
     #   -r /tmp/requirements.txt
     #   docling
