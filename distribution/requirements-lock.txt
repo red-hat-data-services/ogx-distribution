@@ -1910,9 +1910,9 @@ multiprocess==0.70.19 \
     --hash=sha256:e6c0674d34b8adac22533f6786576b3de4e396aaeda9e0c15378af9b8ada2702 \
     --hash=sha256:e8cc7fbdff15c0613f0a1f1f8744bef961b0a164c0ca29bdff53e9d2d93c5e5f
     # via mpire
-narwhals==2.28.0 \
-    --hash=sha256:1f69d6385ec30e2fa6e1fdeb37c562ecabd0f713f6f3e3b58a668c5c9df9567f \
-    --hash=sha256:2d9860c80d6610820826e94c6e42ce4b1d92d89cdd479586e652a8d211dab345
+narwhals==2.29.0 \
+    --hash=sha256:1c69b3dc30240f6e848c5a673cafc86affa44184ecce721e25b7194663ad10dc \
+    --hash=sha256:eb19c877d9a705300bcc9414499a07b32a52db703369414e57e474ca5fc63c42
     # via scikit-learn
 networkx==3.7 \
     --hash=sha256:e3fd2c13a7814cee3746340d8d7f8598a67f16a58bf47fb7f8793fab6efca1b0 \
