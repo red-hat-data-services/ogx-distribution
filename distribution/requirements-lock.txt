@@ -1634,9 +1634,9 @@ markdown-it-py==4.2.0 \
     --hash=sha256:04a21681d6fbb623de53f6f364d352309d4094dd4194040a10fd51833e418d49 \
     --hash=sha256:9f7ebbcd14fe59494226453aed97c1070d83f8d24b6fc3a3bcf9a38092641c4a
     # via rich
-markdownify==1.2.3 \
-    --hash=sha256:1a176f05522c8a2cb1dd3ab9d307dcdadbed5c26ae717855bfc42b3b6d38d937 \
-    --hash=sha256:a189a0bedfd14009030fde5f85bb6f77c56897cb839b5c25315dd7d4e3e290ba
+markdownify==1.2.4 \
+    --hash=sha256:3837f5eb4caa627473451f9ebb91e00d0f12120fc64d64246bea23934244bd01 \
+    --hash=sha256:e0375484fdd2bb007e86779fe34c59673d0011b14f8299953aaf0bf092269220
     # via markitdown
 markitdown==0.1.8 \
     --hash=sha256:17188ad827ea79fc264c7b1ca8cf5a242a16278d84cc32f2edc475dbe92812ed \
