@@ -161,9 +161,9 @@ beautifulsoup4==4.15.0 \
     #   docling-slim
     #   markdownify
     #   markitdown
-boto3==1.44.1 \
-    --hash=sha256:1342653b8af9dc89f182cb5c0dfd5fa10f430d757c0ebd00326c053a6270d2c4 \
-    --hash=sha256:c81dfdaab894cbcba78aa3773fe3fb27a13b576f49ff5552b91190072fc7dac0
+boto3==1.44.5 \
+    --hash=sha256:667b344e25d2bcbb7c42fcf6b92a07bb1d73ee9d6d12c3a7873ec4c490b6fb64 \
+    --hash=sha256:70c3e0409794b29ec1900bcaff0695b73234a2d32ffaed35045b94caa26212a5
     # via -r /tmp/requirements.txt
 botocore==1.44.1 \
     --hash=sha256:7a741074a78e28187c88d9f7f91db18731ea91725455873d863ae63ea35e75f3 \
