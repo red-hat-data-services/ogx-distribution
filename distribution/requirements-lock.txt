@@ -4083,9 +4083,9 @@ tqdm==4.70.1 \
     #   semchunk
     #   sentence-transformers
     #   transformers
-transformers==5.20.2 \
-    --hash=sha256:080871e061546d720be57f5846fce426f46b44d61574907cc7404c2cba49d180 \
-    --hash=sha256:7ae75dbc1fb3922aff1b6c97b9e5479d6cf26fd86a8866bfb71324190479f807
+transformers==5.23.0 \
+    --hash=sha256:018e82fd07490ad5bb58414f65e31576033dc7f36bed10c574843f69b90991bf \
+    --hash=sha256:19d647a4d5d903a7c644ca5cde2d86efc3dde7d8c687ae7988806ff2205efa71
     # via
     #   -r /tmp/requirements.txt
     #   docling-core
