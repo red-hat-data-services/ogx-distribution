@@ -4183,9 +4183,9 @@ truststore==0.10.5 \
     # via
     #   httpcore2
     #   httpx2
-typer==0.26.8 \
-    --hash=sha256:3512ca79ac5c11113414b36e80281b872884477722440691c89d1112e321a49c \
-    --hash=sha256:c244a6bd558886fe3f8780efb6bdd28bb9aff005a94eedebaa5cb32926fe2f7e
+typer==0.29.1 \
+    --hash=sha256:00dbc549c13428bec1be55fe1f4d0fb8c6637a310e4f178ef14abe9534ee7b58 \
+    --hash=sha256:ab6eb3880bf67ce96147734717f9ec333c06f66e361f3ea947d0be43da39f242
     # via
     #   doclang
     #   docling-core
