@@ -2935,9 +2935,9 @@ pylatexenc==2.11 \
     --hash=sha256:305a072a99ce736246049c9da05841b9d718c0f7ea8888f5f596cf15cb621053 \
     --hash=sha256:e78e7391d6c104f1ed150e21cfaa58016cdb50aa54406a2eecb793649ffdfdd0
     # via docling-slim
-pymilvus==3.0.2 \
-    --hash=sha256:0ec7ca3a7d24d2ce13b2610c577f0978b08f461176222ea4dc1440375efc1cea \
-    --hash=sha256:607ac1bcc96719c1716e0027d4a59c6411ad783fb934cbe0618b6d6c0831550d
+pymilvus==3.0.3 \
+    --hash=sha256:b487f0150be8af86e3caea53148d7ea9466650d99820a7b6e588d36de1387e42 \
+    --hash=sha256:d439c039861e753841a0809825602cfb4f146d593f4479d83a3402b738e5968f
     # via
     #   -c distribution/constraints.txt
     #   -r /tmp/requirements.txt
