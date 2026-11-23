@@ -783,9 +783,9 @@ faiss-cpu==1.16.0 \
     # via
     #   -r /tmp/requirements.txt
     #   milvus-lite
-faker==40.54.0 \
-    --hash=sha256:2dd88ee8cb63a9149e19ef48bdd73879bc3854d8ba2d6c1535e902a762e603f7 \
-    --hash=sha256:38fba73e32699a9f1071724d67e5a66a84bf057987cffb27c9d0c979fda3f135
+Faker==40.63.0 \
+    --hash=sha256:36627c20b575b4138f54b6c21f8703e9ab122fd487aca11319beec2aa6ca7232 \
+    --hash=sha256:6c5a09bfb17b3a5fa29f349a2ea86ec5af959df95ec71adc831268adfccc9d62
     # via polyfactory
 fastapi==0.162.5 \
     --hash=sha256:1ca37f64f61c99cebd38636e67525fb721c5e8c1169f07f2a35d73b0a63265d4 \
