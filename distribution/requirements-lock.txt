@@ -2488,9 +2488,9 @@ pdfminer-six==20260107 \
     # via
     #   markitdown
     #   pdfplumber
-pdfplumber==0.11.10 \
-    --hash=sha256:7741ea81bf165b474b153e6789d10d18e06b6ddcf3ec84289c3ef2fed6802580 \
-    --hash=sha256:b95b2d28c66efb0a794a83b88c6c6aea5987532a445d20a1cbcfa657022e6e57
+pdfplumber==0.11.11 \
+    --hash=sha256:81fd7c493ac69a0645a68da49320e4e2cace05d99824439accc7b5b3d955f3bc \
+    --hash=sha256:e38eb7d3a4c822f93067cf6694dcec655f032619f4bd41ebd34f882fc22fbb87
     # via markitdown
 pgvector==0.5.1 \
     --hash=sha256:94998a54b801b1075d623b8fa677fcb8210a7977b88f8e2203ab115c155af2e4 \
