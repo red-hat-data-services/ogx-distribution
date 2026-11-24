@@ -135,6 +135,7 @@ def _build_venv(
         ]
         if constraints:
             cmd.extend(["--constraint", str(constraints)])
+        cmd.extend(["--override", "distribution/overrides.txt"])
         if index_config.torch_backend:
             cmd.extend(["--torch-backend", index_config.torch_backend])
 
@@ -218,6 +219,8 @@ def _compile_lockfile(
         "compile",
         "--constraint",
         str(Path("distribution/constraints.txt")),
+        "--override",
+        "distribution/overrides.txt",
         "--python-platform",
         "linux",
         "--python-version",

@@ -1,0 +1,2 @@
+# docling-slim<=2.141 caps pillow<13; CVE-2026-112902 needs 13.0.0
+pillow==13.0.0
