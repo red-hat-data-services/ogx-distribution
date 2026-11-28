@@ -699,9 +699,9 @@ doclang==0.9.0 \
     --hash=sha256:732c1d8b9e14945836df6bf8ae16e8d4603d77fc160363ce2c5e2aeb3ec4d9cf \
     --hash=sha256:86e8fafa09946389e16218d9b4fb40e161fa02dc965d72be1b9785e2eeea1f4a
     # via docling-core
-docling==2.150.0 \
-    --hash=sha256:6a3aeddd8fbf43732fae1fb65208141470bc7215d34dbb58dd78ae05cbe26739 \
-    --hash=sha256:beac71791c1eba7e1e5ef423d11ff8026887c8cae8643d99d055d447c476b662
+docling==2.153.0 \
+    --hash=sha256:68a4d9f853c99059bff6ab69a03b03f6e293346c3cbf5cb8d6f93e2c71a2469b \
+    --hash=sha256:c779e870166875d1d9817283fd8ddd951369e80d0fd5fbd6d99b30b20614d691
     # via -r /tmp/requirements.txt
 docling-core==2.106.0 \
     --hash=sha256:6d7615f7e8e50593239f5dc87a769badc4e3ef5d9753b0a08585e185ba0d7b7f \
